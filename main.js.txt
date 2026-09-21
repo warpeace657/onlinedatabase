@@ -1,36 +1,26 @@
-document.addEventListener("DOMContentLoaded", () => {
-
-    const filterButtons = document.querySelectorAll("#filters button");
-    const canonCards = document.querySelectorAll(".canon-card");
-
-    filterButtons.forEach(button => {
-
-        button.addEventListener("click", () => {
-
-            const selectedFilter = button.dataset.filter;
-
-            // Update active button
-            filterButtons.forEach(btn => {
-                btn.classList.remove("active");
-            });
-
-            button.classList.add("active");
-
-            // Filter cards
-            canonCards.forEach(card => {
-
-                const cardStatus = card.dataset.status;
-
-                if (selectedFilter === "all" || cardStatus === selectedFilter) {
-                    card.classList.remove("hidden");
-                } else {
-                    card.classList.add("hidden");
-                }
-
-            });
-
-        });
-
-    });
-
-});
+(() => {
+const $=s=>document.querySelector(s); const state={sections:[],entries:[],filter:'all'};
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const api=async(url,opt={})=>{const r=await fetch(url,{headers:{'Content-Type':'application/json',...(opt.headers||{})},...opt});const data=await r.json().catch(()=>({error:'Invalid server response'}));if(!r.ok)throw new Error(data.error||'Request failed');return data};
+async function me(){const m=await api('/api/auth/me');if(m.authenticated)showConsole(m.username);else showLogin()}
+function showLogin(){$('#login-panel').hidden=false;$('#console').hidden=true;$('#logout').hidden=true}
+function showConsole(username){$('#login-panel').hidden=true;$('#console').hidden=false;$('#logout').hidden=false;$('#owner-badge').textContent='OWNER: '+username;load()}
+$('#login-form').addEventListener('submit',async e=>{e.preventDefault();$('#login-error').textContent='';try{await api('/api/auth/login',{method:'POST',body:JSON.stringify({username:$('#username').value,password:$('#password').value})});showConsole($('#username').value)}catch(err){$('#login-error').textContent=err.message}});
+$('#logout').addEventListener('click',async()=>{await api('/api/auth/logout',{method:'POST'});showLogin()});
+async function load(){const [sections,entries,revisions]=await Promise.all([api('/api/admin/sections'),api('/api/admin/entries'),api('/api/admin/revisions')]);state.sections=sections;state.entries=entries;render();renderRevisions(revisions)}
+function render(){
+$('#section').innerHTML=state.sections.map(s=>`<option value="${esc(s.slug)}">${esc(s.name)}</option>`).join('');
+$('#sections').innerHTML=state.sections.map(s=>`<div class="section-row"><strong>${esc(s.name)}</strong><div class="small">${esc(s.slug)}</div></div>`).join('');
+const rows=state.entries.filter(e=>state.filter==='all'||e.status===state.filter);
+$('#entries').innerHTML=rows.length?rows.map(e=>`<article class="entry"><div class="entry-head"><div><div class="entry-title">${esc(e.title)}</div><div class="small">${esc(e.section_name)}</div></div><span class="badge">${esc(e.status.toUpperCase())}</span></div><div class="entry-desc">${esc(e.description)}</div><div class="entry-actions"><button type="button" data-act="lock" data-id="${e.id}">Lock</button><button type="button" data-act="move" data-id="${e.id}">Move</button><button type="button" data-act="delete" data-id="${e.id}">Delete</button></div></article>`).join(''):'<div class="muted">No entries.</div>';
+}
+function renderRevisions(rows){$('#revisions').innerHTML=rows.map(r=>`<div class="revision"><strong>${esc(r.action)}</strong> ${esc(r.target_type)} #${r.target_id||''}<div class="small">${esc(r.created_at)} ÔÇö ${esc(r.username||'system')}</div></div>`).join('')||'<div class="muted">No revisions.</div>'}
+$('#entry-form').addEventListener('submit',async e=>{e.preventDefault();try{await api('/api/admin/entries',{method:'POST',body:JSON.stringify({title:$('#title').value,description:$('#description').value,status:$('#status').value,sectionSlug:$('#section').value})});e.target.reset();await load()}catch(err){alert(err.message)}});
+$('#section-form').addEventListener('submit',async e=>{e.preventDefault();try{await api('/api/admin/sections',{method:'POST',body:JSON.stringify({name:$('#section-name').value})});e.target.reset();await load()}catch(err){alert(err.message)}});
+$('#filter').addEventListener('change',e=>{state.filter=e.target.value;render()});
+$('#run').addEventListener('click',async()=>{const input=$('#command');const command=input.value.trim();if(!command)return;try{const r=await api('/api/admin/command',{method:'POST',body:JSON.stringify({command})});$('#output').textContent='Ô£ô '+r.message;input.value='';await load()}catch(err){$('#output').textContent='Ô£ò '+err.message}});
+$('#command').addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();$('#run').click()}});
+$('#command-help').addEventListener('click',async()=>{try{const r=await api('/api/admin/command',{method:'POST',body:JSON.stringify({command:'HELP'})});$('#output').textContent=r.message}catch(err){$('#output').textContent=err.message}});
+$('#entries').addEventListener('click',async e=>{const b=e.target.closest('button[data-act]');if(!b)return;const entry=state.entries.find(x=>String(x.id)===b.dataset.id);if(!entry)return;try{if(b.dataset.act==='delete'){if(!confirm(`Delete ${entry.title}?`))return;await api('/api/admin/entries/'+entry.id,{method:'DELETE'})}if(b.dataset.act==='lock'){await api('/api/admin/entries/'+entry.id,{method:'PATCH',body:JSON.stringify({status:'locked'})})}if(b.dataset.act==='move'){const s=prompt('Section name:',entry.section_name);if(!s)return;const found=state.sections.find(x=>x.name.toLowerCase()===s.toLowerCase()||x.slug===s.toLowerCase());if(!found){alert('Section not found');return}await api('/api/admin/entries/'+entry.id,{method:'PATCH',body:JSON.stringify({sectionSlug:found.slug})})}await load()}catch(err){alert(err.message)}});
+me().catch(()=>showLogin());
+})();
