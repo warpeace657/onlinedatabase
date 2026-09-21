@@ -19,7 +19,7 @@
 
     <link
         rel="stylesheet"
-        href="css/style.css"
+        href="css/admin.css"
     >
 
 </head>
@@ -1571,7 +1571,7 @@
      JAVASCRIPT
      ========================================================= -->
 
-<script src="js/main.js"></script>
+<script src="js/admin.js"></script>
 
 
 </body>
