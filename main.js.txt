@@ -31,10 +31,13 @@ app.use(
 );
 
 app.use(express.json({ limit: '100kb' }));
-app.use(express.urlencoded({
-    extended: false,
-    limit: '50kb'
-}));
+
+app.use(
+    express.urlencoded({
+        extended: false,
+        limit: '50kb'
+    })
+);
 
 app.use(
     session({
@@ -55,30 +58,33 @@ app.use(
 /* =========================================================
    PATHS
    ========================================================= */
- 
+
 const rootDir = path.join(__dirname, '..');
- 
+
 const publicDir = path.join(rootDir, 'public');
 const adminDir = path.join(rootDir, 'admin');
- 
+
 const backupDir = path.join(rootDir, 'backups');
- 
+
 const canonFile = path.join(
     publicDir,
     'index.html'
 );
- 
+
 const revisionFile = path.join(
     rootDir,
     'revisions.json'
 );
- 
- 
+
+
 /* =========================================================
    DIRECTORIES
    ========================================================= */
- 
-fs.mkdirSync(backupDir, { recursive: true });
+
+fs.mkdirSync(
+    backupDir,
+    { recursive: true }
+);
 
 
 /* =========================================================
@@ -99,6 +105,7 @@ function cleanString(value, max = 5000) {
     return v;
 }
 
+
 function validStatus(value) {
     return [
         'locked',
@@ -107,6 +114,7 @@ function validStatus(value) {
         'rejected'
     ].includes(value);
 }
+
 
 function escapeHtml(value) {
     return String(value)
@@ -117,12 +125,14 @@ function escapeHtml(value) {
         .replace(/'/g, '&#39;');
 }
 
+
 function escapeRegExp(value) {
     return String(value).replace(
         /[.*+?^${}()|[\]\\]/g,
         '\\$&'
     );
 }
+
 
 function slugify(value) {
     return String(value)
@@ -132,6 +142,7 @@ function slugify(value) {
         .replace(/[^a-z0-9]+/g, '-')
         .replace(/^-+|-+$/g, '');
 }
+
 
 function timestamp() {
     const d = new Date();
@@ -151,6 +162,7 @@ function timestamp() {
         pad(d.getSeconds())
     ].join('');
 }
+
 
 function generateId() {
     return (
@@ -177,6 +189,7 @@ function ensureCanonFile() {
     }
 }
 
+
 function readCanon() {
     ensureCanonFile();
 
@@ -185,6 +198,7 @@ function readCanon() {
         'utf8'
     );
 }
+
 
 function writeCanon(html) {
     fs.writeFileSync(
@@ -240,10 +254,12 @@ function readRevisions() {
         return Array.isArray(data)
             ? data
             : [];
+
     } catch {
         return [];
     }
 }
+
 
 function saveRevisions(rows) {
     fs.writeFileSync(
@@ -257,6 +273,7 @@ function saveRevisions(rows) {
     );
 }
 
+
 function addRevision({
     action,
     target,
@@ -264,15 +281,21 @@ function addRevision({
     details,
     username
 }) {
-    const rows = readRevisions();
+    const rows =
+        readRevisions();
 
     rows.unshift({
         action,
-        target_type: target || 'canon',
-        target_id: targetId || null,
-        details: details || '',
-        username: username || 'owner',
-        created_at: new Date().toISOString()
+        target_type:
+            target || 'canon',
+        target_id:
+            targetId || null,
+        details:
+            details || '',
+        username:
+            username || 'owner',
+        created_at:
+            new Date().toISOString()
     });
 
     saveRevisions(rows);
@@ -284,12 +307,15 @@ function addRevision({
    ========================================================= */
 
 function modifyCanon(callback) {
-    const current = readCanon();
+    const current =
+        readCanon();
 
-    const backup = backupCanon();
+    const backup =
+        backupCanon();
 
     try {
-        const updated = callback(current);
+        const updated =
+            callback(current);
 
         if (
             typeof updated !== 'string' ||
@@ -308,12 +334,16 @@ function modifyCanon(callback) {
         };
 
     } catch (error) {
+
         /*
-         * If modification fails, restore the original
-         * automatically from the backup.
+         * Restore the original document automatically
+         * if anything goes wrong.
          */
         fs.copyFileSync(
-            path.join(backupDir, backup),
+            path.join(
+                backupDir,
+                backup
+            ),
             canonFile
         );
 
@@ -323,71 +353,8 @@ function modifyCanon(callback) {
 
 
 /* =========================================================
-   SECTION PARSING
+   HTML UTILITIES
    ========================================================= */
-
-function getSections() {
-    const html = readCanon();
-
-    const sections = [];
-
-    const regex =
-        /<div\s+id="([^"]+)"\s+class="section(?:\s+[^"]*)?"[^>]*>([\s\S]*?)(?=<div\s+id="[^"]+"\s+class="section(?:\s|")|<\/div>\s*<!-- =====================================================\s+FOOTER)/gi;
-
-    let match;
-
-    while ((match = regex.exec(html)) !== null) {
-        const slug = match[1];
-        const body = match[2];
-
-        const titleMatch =
-            body.match(
-                /<div\s+class="section-title">\s*([\s\S]*?)\s*<\/div>/i
-            );
-
-        const title = titleMatch
-            ? stripHtml(titleMatch[1]).trim()
-            : slug;
-
-        sections.push({
-            slug,
-            name: title
-        });
-    }
-
-    /*
-     * Fallback parser.
-     * This handles the current document's structure
-     * even if the large regex above cannot determine
-     * the exact section boundary.
-     */
-    if (!sections.length) {
-        const fallback =
-            /<div\s+id="([^"]+)"\s+class="section[^"]*"[\s\S]*?<div\s+class="section-title">\s*([\s\S]*?)\s*<\/div>/gi;
-
-        while ((match = fallback.exec(html)) !== null) {
-            sections.push({
-                slug: match[1],
-                name: stripHtml(match[2]).trim()
-            });
-        }
-    }
-
-    return uniqueSections(sections);
-}
-
-function uniqueSections(sections) {
-    const seen = new Set();
-
-    return sections.filter(section => {
-        if (seen.has(section.slug)) {
-            return false;
-        }
-
-        seen.add(section.slug);
-        return true;
-    });
-}
 
 function stripHtml(value) {
     return String(value)
@@ -396,22 +363,129 @@ function stripHtml(value) {
         .trim();
 }
 
-function findSectionByName(name) {
-    const q = cleanString(name, 200)
-        .toLowerCase()
-        .trim();
 
-    const sections = getSections();
+/* =========================================================
+   SECTION PARSING
+   ========================================================= */
+
+function getSections() {
+    const html =
+        readCanon();
+
+    const sections = [];
+
+    const regex =
+        /<div\s+id="([^"]+)"\s+class="section(?:\s+[^"]*)?"[^>]*>([\s\S]*?)(?=<div\s+id="[^"]+"\s+class="section(?:\s|")|<\/div>\s*<!-- =====================================================\s+FOOTER)/gi;
+
+    let match;
+
+    while (
+        (match = regex.exec(html)) !== null
+    ) {
+        const slug =
+            match[1];
+
+        const body =
+            match[2];
+
+        const titleMatch =
+            body.match(
+                /<div\s+class="section-title">\s*([\s\S]*?)\s*<\/div>/i
+            );
+
+        const title =
+            titleMatch
+                ? stripHtml(
+                    titleMatch[1]
+                ).trim()
+                : slug;
+
+        sections.push({
+            slug,
+            name: title
+        });
+    }
+
+
+    /*
+     * Fallback parser.
+     */
+    if (!sections.length) {
+
+        const fallback =
+            /<div\s+id="([^"]+)"\s+class="section[^"]*"[\s\S]*?<div\s+class="section-title">\s*([\s\S]*?)\s*<\/div>/gi;
+
+        while (
+            (match =
+                fallback.exec(html)) !== null
+        ) {
+            sections.push({
+                slug: match[1],
+                name:
+                    stripHtml(
+                        match[2]
+                    ).trim()
+            });
+        }
+    }
+
+    return uniqueSections(
+        sections
+    );
+}
+
+
+function uniqueSections(sections) {
+    const seen =
+        new Set();
+
+    return sections.filter(
+        section => {
+
+            if (
+                seen.has(
+                    section.slug
+                )
+            ) {
+                return false;
+            }
+
+            seen.add(
+                section.slug
+            );
+
+            return true;
+        }
+    );
+}
+
+
+function findSectionByName(name) {
+    const q =
+        cleanString(
+            name,
+            200
+        ).toLowerCase().trim();
+
+    const sections =
+        getSections();
 
     return (
         sections.find(
-            s => s.slug.toLowerCase() === q
+            s =>
+                s.slug
+                    .toLowerCase() === q
         ) ||
         sections.find(
-            s => s.name.toLowerCase() === q
+            s =>
+                s.name
+                    .toLowerCase() === q
         ) ||
         sections.find(
-            s => s.name.toLowerCase().includes(q)
+            s =>
+                s.name
+                    .toLowerCase()
+                    .includes(q)
         )
     );
 }
@@ -421,11 +495,15 @@ function findSectionByName(name) {
    SECTION HTML
    ========================================================= */
 
-function findSectionRange(html, sectionSlug) {
-    const startRegex = new RegExp(
-        `<div\\s+id="${escapeRegExp(sectionSlug)}"\\s+class="section[^"]*"[^>]*>`,
-        'i'
-    );
+function findSectionRange(
+    html,
+    sectionSlug
+) {
+    const startRegex =
+        new RegExp(
+            `<div\\s+id="${escapeRegExp(sectionSlug)}"\\s+class="section[^"]*"[^>]*>`,
+            'i'
+        );
 
     const startMatch =
         startRegex.exec(html);
@@ -436,48 +514,52 @@ function findSectionRange(html, sectionSlug) {
         );
     }
 
-    const start = startMatch.index;
+    const start =
+        startMatch.index;
 
-    /*
-     * We locate the next top-level section by searching
-     * for the next known section ID.
-     */
     const sectionIds =
         getSections()
             .map(s => s.slug)
             .filter(
-                id => id !== sectionSlug
+                id =>
+                    id !== sectionSlug
             );
 
-    let end = html.length;
+    let end =
+        html.length;
 
     for (const id of sectionIds) {
-        const regex = new RegExp(
-            `<div\\s+id="${escapeRegExp(id)}"\\s+class="section[^"]*"`,
-            'i'
-        );
+
+        const regex =
+            new RegExp(
+                `<div\\s+id="${escapeRegExp(id)}"\\s+class="section[^"]*"`,
+                'i'
+            );
 
         const match =
             regex.exec(
-                html.slice(start + startMatch[0].length)
+                html.slice(
+                    start +
+                    startMatch[0].length
+                )
             );
 
         if (match) {
+
             const candidate =
                 start +
                 startMatch[0].length +
                 match.index;
 
-            if (candidate < end) {
-                end = candidate;
+            if (
+                candidate < end
+            ) {
+                end =
+                    candidate;
             }
         }
     }
 
-    /*
-     * The principle section is normally the last section,
-     * so if this is not it, the above boundary is enough.
-     */
     return {
         start,
         end
@@ -486,30 +568,187 @@ function findSectionRange(html, sectionSlug) {
 
 
 /* =========================================================
-   CMS CARD PARSING
+   SAFE BALANCED DIV PARSER
    ========================================================= */
 
-function getEntries() {
-    const html = readCanon();
+/*
+ * Finds the complete range of a <div> element,
+ * including every nested <div>.
+ *
+ * This prevents the CMS from accidentally stopping
+ * at an inner </div>.
+ */
+function findBalancedDivRange(
+    html,
+    startIndex
+) {
+    const openTag =
+        /<div\b[^>]*>/gi;
 
-    const entries = [];
+    openTag.lastIndex =
+        startIndex;
 
-    /*
-     * Only cards carrying data-canon-id are CMS-managed.
-     *
-     * This is deliberate:
-     * existing project canon remains untouched.
-     */
-    const cardRegex =
-        /<div\s+class="card canon-card ([^"]+)"\s+data-status="([^"]+)"\s+data-canon-id="([^"]+)"[^>]*>([\s\S]*?)<\/div>\s*(?=<div\s+class="card canon-card|<\/div>)/gi;
+    const first =
+        openTag.exec(html);
+
+    if (
+        !first ||
+        first.index !== startIndex
+    ) {
+        throw new Error(
+            'Could not locate the beginning of the HTML card.'
+        );
+    }
+
+    let depth = 0;
+
+    const tagRegex =
+        /<\/?div\b[^>]*>/gi;
+
+    tagRegex.lastIndex =
+        startIndex;
 
     let match;
 
-    while ((match = cardRegex.exec(html)) !== null) {
-        const classes = match[1];
-        const status = match[2];
-        const id = match[3];
-        const body = match[4];
+    while (
+        (match =
+            tagRegex.exec(html)) !== null
+    ) {
+        const tag =
+            match[0];
+
+        if (
+            /^<div\b/i.test(tag)
+        ) {
+            depth++;
+        } else {
+            depth--;
+        }
+
+        if (depth === 0) {
+
+            return {
+                start: startIndex,
+                end:
+                    tagRegex.lastIndex,
+                html:
+                    html.slice(
+                        startIndex,
+                        tagRegex.lastIndex
+                    )
+            };
+        }
+    }
+
+    throw new Error(
+        'Could not find the complete closing tag for the HTML card.'
+    );
+}
+
+
+/*
+ * Finds one CMS-managed card.
+ *
+ * ONLY cards containing data-canon-id
+ * can be modified.
+ */
+function findManagedCardRange(
+    html,
+    id
+) {
+    const escapedId =
+        escapeRegExp(id);
+
+    const openingTagRegex =
+        new RegExp(
+            `<div\\b(?=[^>]*\\bclass="[^"]*\\bcard\\b[^"]*\\bcanon-card\\b[^"]*")(?=[^>]*\\bdata-canon-id="${escapedId}")[^>]*>`,
+            'i'
+        );
+
+    const match =
+        openingTagRegex.exec(
+            html
+        );
+
+    if (!match) {
+        throw new Error(
+            'Could not locate the CMS-managed canon card.'
+        );
+    }
+
+    return findBalancedDivRange(
+        html,
+        match.index
+    );
+}
+
+
+/*
+ * Finds all CMS-managed cards.
+ */
+function getManagedCardRanges(html) {
+    const ranges = [];
+
+    const openingTagRegex =
+        /<div\b(?=[^>]*\bclass="[^"]*\bcard\b[^"]*\bcanon-card\b[^"]*")(?=[^>]*\bdata-canon-id="([^"]+)")[^>]*>/gi;
+
+    let match;
+
+    while (
+        (match =
+            openingTagRegex.exec(html)) !== null
+    ) {
+
+        const range =
+            findBalancedDivRange(
+                html,
+                match.index
+            );
+
+        ranges.push({
+            ...range,
+            id: match[1]
+        });
+
+        openingTagRegex.lastIndex =
+            range.end;
+    }
+
+    return ranges;
+}
+
+
+/* =========================================================
+   CMS ENTRY PARSING
+   ========================================================= */
+
+function getEntries() {
+    const html =
+        readCanon();
+
+    const entries = [];
+
+    const cards =
+        getManagedCardRanges(
+            html
+        );
+
+    for (const card of cards) {
+
+        const body =
+            card.html;
+
+        const statusMatch =
+            body.match(
+                /\bdata-status="([^"]+)"/i
+            );
+
+        if (!statusMatch) {
+            continue;
+        }
+
+        const status =
+            statusMatch[1];
 
         const titleMatch =
             body.match(
@@ -523,44 +762,63 @@ function getEntries() {
 
         const title =
             titleMatch
-                ? stripHtml(titleMatch[1])
-                : id;
+                ? stripHtml(
+                    titleMatch[1]
+                )
+                : card.id;
 
         const description =
             textMatch
-                ? stripHtml(textMatch[1])
+                ? stripHtml(
+                    textMatch[1]
+                )
                 : '';
 
         const section =
             findEntrySection(
                 html,
-                match.index
+                card.start
             );
 
         entries.push({
-            id,
+            id:
+                card.id,
+
             title,
+
             description,
+
             status,
-            section_slug: section
-                ? section.slug
-                : '',
-            section_name: section
-                ? section.name
-                : '',
-            classes
+
+            section_slug:
+                section
+                    ? section.slug
+                    : '',
+
+            section_name:
+                section
+                    ? section.name
+                    : ''
         });
     }
 
     return entries;
 }
 
-function findEntrySection(html, position) {
-    const sections = getSections();
+
+function findEntrySection(
+    html,
+    position
+) {
+    const sections =
+        getSections();
 
     let best = null;
 
-    for (const section of sections) {
+    for (
+        const section of sections
+    ) {
+
         const range =
             findSectionRangeSafe(
                 html,
@@ -572,9 +830,11 @@ function findEntrySection(html, position) {
             position >= range.start &&
             position < range.end
         ) {
+
             if (
                 !best ||
-                range.start > best.range.start
+                range.start >
+                    best.range.start
             ) {
                 best = {
                     section,
@@ -589,37 +849,51 @@ function findEntrySection(html, position) {
         : null;
 }
 
+
 function findSectionRangeSafe(
     html,
     slug
 ) {
     try {
+
         return findSectionRange(
             html,
             slug
         );
+
     } catch {
+
         return null;
     }
 }
 
+
 function findEntry(query) {
     const q =
-        cleanString(query, 300)
-            .toLowerCase();
+        cleanString(
+            query,
+            300
+        ).toLowerCase();
 
     const entries =
         getEntries();
 
     return (
         entries.find(
-            e => e.title.toLowerCase() === q
+            e =>
+                e.title
+                    .toLowerCase() === q
         ) ||
         entries.find(
-            e => e.id.toLowerCase() === q
+            e =>
+                e.id
+                    .toLowerCase() === q
         ) ||
         entries.find(
-            e => e.title.toLowerCase().includes(q)
+            e =>
+                e.title
+                    .toLowerCase()
+                    .includes(q)
         )
     );
 }
@@ -679,7 +953,9 @@ function addEntry({
     }
 
     const section =
-        findSectionByName(sectionSlug);
+        findSectionByName(
+            sectionSlug
+        );
 
     if (!section) {
         throw new Error(
@@ -691,74 +967,72 @@ function addEntry({
         generateId();
 
     const result =
-        modifyCanon(html => {
-            const range =
-                findSectionRange(
-                    html,
-                    section.slug
-                );
+        modifyCanon(
+            html => {
 
-            const sectionHtml =
-                html.slice(
-                    range.start,
-                    range.end
-                );
-
-            /*
-             * Prefer inserting into an existing card-grid.
-             */
-            const cardGridRegex =
-                /<div\s+class="card-grid[^"]*"[^>]*>/i;
-
-            const gridMatch =
-                sectionHtml.match(
-                    cardGridRegex
-                );
-
-            const card =
-                createCanonCard({
-                    title,
-                    description,
-                    status,
-                    id
-                });
-
-            let updatedSection;
-
-            if (gridMatch) {
-                const insertAt =
-                    gridMatch.index +
-                    gridMatch[0].length;
-
-                updatedSection =
-                    sectionHtml.slice(
-                        0,
-                        insertAt
-                    ) +
-                    '\n' +
-                    card +
-                    sectionHtml.slice(
-                        insertAt
+                const range =
+                    findSectionRange(
+                        html,
+                        section.slug
                     );
 
-            } else {
-                /*
-                 * For text-only sections, create a card
-                 * grid immediately before section-content
-                 * closes.
-                 */
-                const contentEnd =
-                    sectionHtml.lastIndexOf(
-                        '</div>'
+                const sectionHtml =
+                    html.slice(
+                        range.start,
+                        range.end
                     );
 
-                if (contentEnd === -1) {
-                    throw new Error(
-                        'Could not find a safe insertion point.'
-                    );
-                }
+                const cardGridRegex =
+                    /<div\s+class="card-grid[^"]*"[^>]*>/i;
 
-                const block = `
+                const gridMatch =
+                    sectionHtml.match(
+                        cardGridRegex
+                    );
+
+                const card =
+                    createCanonCard({
+                        title,
+                        description,
+                        status,
+                        id
+                    });
+
+                let updatedSection;
+
+                if (gridMatch) {
+
+                    const insertAt =
+                        gridMatch.index +
+                        gridMatch[0].length;
+
+                    updatedSection =
+                        sectionHtml.slice(
+                            0,
+                            insertAt
+                        ) +
+                        '\n' +
+                        card +
+                        sectionHtml.slice(
+                            insertAt
+                        );
+
+                } else {
+
+                    const contentEnd =
+                        sectionHtml.lastIndexOf(
+                            '</div>'
+                        );
+
+                    if (
+                        contentEnd === -1
+                    ) {
+                        throw new Error(
+                            'Could not find a safe insertion point.'
+                        );
+                    }
+
+                    const block = `
                     <div class="card-grid">
 
 ${card}
@@ -767,28 +1041,29 @@ ${card}
 
 `;
 
-                updatedSection =
-                    sectionHtml.slice(
-                        0,
-                        contentEnd
-                    ) +
-                    block +
-                    sectionHtml.slice(
-                        contentEnd
-                    );
-            }
+                    updatedSection =
+                        sectionHtml.slice(
+                            0,
+                            contentEnd
+                        ) +
+                        block +
+                        sectionHtml.slice(
+                            contentEnd
+                        );
+                }
 
-            return (
-                html.slice(
-                    0,
-                    range.start
-                ) +
-                updatedSection +
-                html.slice(
-                    range.end
-                )
-            );
-        });
+                return (
+                    html.slice(
+                        0,
+                        range.start
+                    ) +
+                    updatedSection +
+                    html.slice(
+                        range.end
+                    )
+                );
+            }
+        );
 
     addRevision({
         action: 'ADD',
@@ -804,9 +1079,12 @@ ${card}
         title,
         description,
         status,
-        section_slug: section.slug,
-        section_name: section.name,
-        backup: result.backup
+        section_slug:
+            section.slug,
+        section_name:
+            section.name,
+        backup:
+            result.backup
     };
 }
 
@@ -861,8 +1139,10 @@ function updateEntry(
 
     const targetSection =
         newSection || {
-            slug: entry.section_slug,
-            name: entry.section_name
+            slug:
+                entry.section_slug,
+            name:
+                entry.section_name
         };
 
     const newTitle =
@@ -880,114 +1160,129 @@ function updateEntry(
             ? patch.status
             : entry.status;
 
-    /*
-     * Find the exact CMS card.
-     */
-    const cardRegex =
-        new RegExp(
-            `<div\\s+class="card\\s+canon-card\\s+[^"]*"\\s+data-status="[^"]*"\\s+data-canon-id="${escapeRegExp(entry.id)}"[^>]*>[\\s\\S]*?<\\/div>`,
-            'i'
-        );
-
-    const match =
-        readCanon().match(cardRegex);
-
-    if (!match) {
-        throw new Error(
-            'Could not locate the canon card in the HTML.'
-        );
-    }
-
     const replacement =
         createCanonCard({
-            title: newTitle,
-            description: newDescription,
-            status: newStatus,
-            id: entry.id
+            title:
+                newTitle,
+            description:
+                newDescription,
+            status:
+                newStatus,
+            id:
+                entry.id
         });
 
     const result =
-        modifyCanon(html => {
-            if (
-                newSection &&
-                newSection.slug !==
-                entry.section_slug
-            ) {
-                /*
-                 * Remove from current location.
-                 */
-                const removed =
-                    html.replace(
-                        cardRegex,
-                        ''
+        modifyCanon(
+            html => {
+
+                const card =
+                    findManagedCardRange(
+                        html,
+                        entry.id
                     );
+
 
                 /*
-                 * Insert into destination.
+                 * MOVE
                  */
-                const range =
-                    findSectionRange(
-                        removed,
-                        newSection.slug
-                    );
+                if (
+                    newSection &&
+                    newSection.slug !==
+                        entry.section_slug
+                ) {
 
-                const sectionHtml =
-                    removed.slice(
-                        range.start,
-                        range.end
-                    );
+                    /*
+                     * Remove the complete card.
+                     */
+                    const removed =
+                        html.slice(
+                            0,
+                            card.start
+                        ) +
+                        html.slice(
+                            card.end
+                        );
 
-                const gridRegex =
-                    /<div\s+class="card-grid[^"]*"[^>]*>/i;
 
-                const gridMatch =
-                    sectionHtml.match(
-                        gridRegex
-                    );
+                    /*
+                     * Locate destination section.
+                     */
+                    const range =
+                        findSectionRange(
+                            removed,
+                            newSection.slug
+                        );
 
-                if (!gridMatch) {
-                    throw new Error(
-                        'Destination section has no card grid.'
+                    const sectionHtml =
+                        removed.slice(
+                            range.start,
+                            range.end
+                        );
+
+                    const gridRegex =
+                        /<div\s+class="card-grid[^"]*"[^>]*>/i;
+
+                    const gridMatch =
+                        sectionHtml.match(
+                            gridRegex
+                        );
+
+                    if (!gridMatch) {
+                        throw new Error(
+                            'Destination section has no card grid.'
+                        );
+                    }
+
+                    const insertAt =
+                        gridMatch.index +
+                        gridMatch[0].length;
+
+                    const updatedSection =
+                        sectionHtml.slice(
+                            0,
+                            insertAt
+                        ) +
+                        '\n' +
+                        replacement +
+                        sectionHtml.slice(
+                            insertAt
+                        );
+
+                    return (
+                        removed.slice(
+                            0,
+                            range.start
+                        ) +
+                        updatedSection +
+                        removed.slice(
+                            range.end
+                        )
                     );
                 }
 
-                const insertAt =
-                    gridMatch.index +
-                    gridMatch[0].length;
 
-                const updatedSection =
-                    sectionHtml.slice(
-                        0,
-                        insertAt
-                    ) +
-                    '\n' +
-                    replacement +
-                    sectionHtml.slice(
-                        insertAt
-                    );
-
+                /*
+                 * NORMAL UPDATE
+                 */
                 return (
-                    removed.slice(
+                    html.slice(
                         0,
-                        range.start
+                        card.start
                     ) +
-                    updatedSection +
-                    removed.slice(
-                        range.end
+                    replacement +
+                    html.slice(
+                        card.end
                     )
                 );
             }
-
-            return html.replace(
-                cardRegex,
-                replacement
-            );
-        });
+        );
 
     addRevision({
         action: 'UPDATE',
         target: 'canon',
-        targetId: entry.id,
+        targetId:
+            entry.id,
         details:
             `${entry.title} → ${newTitle}`,
         username
@@ -995,12 +1290,24 @@ function updateEntry(
 
     return {
         ...entry,
-        title: newTitle,
-        description: newDescription,
-        status: newStatus,
-        section_slug: targetSection.slug,
-        section_name: targetSection.name,
-        backup: result.backup
+
+        title:
+            newTitle,
+
+        description:
+            newDescription,
+
+        status:
+            newStatus,
+
+        section_slug:
+            targetSection.slug,
+
+        section_name:
+            targetSection.name,
+
+        backup:
+            result.backup
     };
 }
 
@@ -1024,38 +1331,44 @@ function deleteEntry(
         );
     }
 
-    const cardRegex =
-        new RegExp(
-            `<div\\s+class="card\\s+canon-card\\s+[^"]*"\\s+data-status="[^"]*"\\s+data-canon-id="${escapeRegExp(entry.id)}"[^>]*>[\\s\\S]*?<\\/div>`,
-            'i'
-        );
-
     const result =
-        modifyCanon(html => {
-            if (!cardRegex.test(html)) {
-                throw new Error(
-                    'Could not locate canon card.'
+        modifyCanon(
+            html => {
+
+                const card =
+                    findManagedCardRange(
+                        html,
+                        entry.id
+                    );
+
+                return (
+                    html.slice(
+                        0,
+                        card.start
+                    ) +
+                    html.slice(
+                        card.end
+                    )
                 );
             }
-
-            return html.replace(
-                cardRegex,
-                ''
-            );
-        });
+        );
 
     addRevision({
         action: 'DELETE',
         target: 'canon',
-        targetId: id,
-        details: entry.title,
+        targetId:
+            id,
+        details:
+            entry.title,
         username
     });
 
     return {
         ok: true,
-        title: entry.title,
-        backup: result.backup
+        title:
+            entry.title,
+        backup:
+            result.backup
     };
 }
 
@@ -1069,10 +1382,15 @@ function createSection(
     username
 ) {
     const cleanName =
-        cleanString(name, 100);
+        cleanString(
+            name,
+            100
+        );
 
     const slug =
-        slugify(cleanName);
+        slugify(
+            cleanName
+        );
 
     if (!slug) {
         throw new Error(
@@ -1082,7 +1400,8 @@ function createSection(
 
     if (
         getSections().some(
-            s => s.slug === slug
+            s =>
+                s.slug === slug
         )
     ) {
         throw new Error(
@@ -1090,8 +1409,10 @@ function createSection(
         );
     }
 
-    modifyCanon(html => {
-        const section = `
+    modifyCanon(
+        html => {
+
+            const section = `
 
         <!-- =================================================
              CMS SECTION — ${escapeHtml(cleanName)}
@@ -1123,40 +1444,46 @@ function createSection(
 
 `;
 
-        const principleIndex =
-            html.indexOf(
-                '<div id="principle"'
-            );
+            const principleIndex =
+                html.indexOf(
+                    '<div id="principle"'
+                );
 
-        if (principleIndex === -1) {
-            throw new Error(
-                'Could not find project principle section.'
+            if (
+                principleIndex === -1
+            ) {
+                throw new Error(
+                    'Could not find project principle section.'
+                );
+            }
+
+            return (
+                html.slice(
+                    0,
+                    principleIndex
+                ) +
+                section +
+                html.slice(
+                    principleIndex
+                )
             );
         }
-
-        return (
-            html.slice(
-                0,
-                principleIndex
-            ) +
-            section +
-            html.slice(
-                principleIndex
-            )
-        );
-    });
+    );
 
     addRevision({
         action: 'SECTION',
         target: 'section',
-        targetId: slug,
-        details: cleanName,
+        targetId:
+            slug,
+        details:
+            cleanName,
         username
     });
 
     return {
         slug,
-        name: cleanName
+        name:
+            cleanName
     };
 }
 
@@ -1187,21 +1514,27 @@ function requireOwner(
 
 
 /* =========================================================
-   PUBLIC CANON
+   PUBLIC CANON API
    ========================================================= */
 
 app.get(
     '/api/public/canon',
     (req, res) => {
+
         try {
+
             res.json({
-                html: readCanon()
+                html:
+                    readCanon()
             });
+
         } catch (error) {
+
             res
                 .status(500)
                 .json({
-                    error: error.message
+                    error:
+                        error.message
                 });
         }
     }
@@ -1215,10 +1548,12 @@ app.get(
 app.get(
     '/api/auth/me',
     (req, res) => {
+
         res.json({
             authenticated:
                 req.session.user?.role ===
                 'owner',
+
             username:
                 req.session.user?.username ||
                 null
@@ -1226,10 +1561,13 @@ app.get(
     }
 );
 
+
 app.post(
     '/api/auth/login',
     (req, res) => {
+
         try {
+
             const username =
                 cleanString(
                     req.body.username,
@@ -1245,7 +1583,9 @@ app.post(
             const user =
                 db.prepare(
                     'SELECT * FROM users WHERE username=?'
-                ).get(username);
+                ).get(
+                    username
+                );
 
             if (
                 !user ||
@@ -1254,6 +1594,7 @@ app.post(
                     user.password_hash
                 )
             ) {
+
                 return res
                     .status(401)
                     .json({
@@ -1264,7 +1605,9 @@ app.post(
 
             req.session.regenerate(
                 err => {
+
                     if (err) {
+
                         return res
                             .status(500)
                             .json({
@@ -1274,18 +1617,25 @@ app.post(
                     }
 
                     req.session.user = {
-                        id: user.id,
-                        username: user.username,
-                        role: user.role
+                        id:
+                            user.id,
+
+                        username:
+                            user.username,
+
+                        role:
+                            user.role
                     };
 
                     res.json({
-                        ok: true
+                        ok:
+                            true
                     });
                 }
             );
 
         } catch (error) {
+
             res
                 .status(400)
                 .json({
@@ -1296,13 +1646,17 @@ app.post(
     }
 );
 
+
 app.post(
     '/api/auth/logout',
     (req, res) => {
+
         req.session.destroy(
-            () => res.json({
-                ok: true
-            })
+            () =>
+                res.json({
+                    ok:
+                        true
+                })
         );
     }
 );
@@ -1316,11 +1670,15 @@ app.get(
     '/api/admin/sections',
     requireOwner,
     (req, res) => {
+
         try {
+
             res.json(
                 getSections()
             );
+
         } catch (error) {
+
             res
                 .status(500)
                 .json({
@@ -1330,16 +1688,21 @@ app.get(
         }
     }
 );
+
 
 app.get(
     '/api/admin/entries',
     requireOwner,
     (req, res) => {
+
         try {
+
             res.json(
                 getEntries()
             );
+
         } catch (error) {
+
             res
                 .status(500)
                 .json({
@@ -1350,10 +1713,12 @@ app.get(
     }
 );
 
+
 app.get(
     '/api/admin/revisions',
     requireOwner,
     (req, res) => {
+
         res.json(
             readRevisions()
         );
@@ -1362,14 +1727,16 @@ app.get(
 
 
 /* =========================================================
-   ADD ENTRY
+   ADD ENTRY API
    ========================================================= */
 
 app.post(
     '/api/admin/entries',
     requireOwner,
     (req, res) => {
+
         try {
+
             const title =
                 cleanString(
                     req.body.title,
@@ -1401,7 +1768,8 @@ app.post(
                     status,
                     sectionSlug,
                     username:
-                        req.session.user.username
+                        req.session.user
+                            .username
                 });
 
             res
@@ -1409,6 +1777,7 @@ app.post(
                 .json(entry);
 
         } catch (error) {
+
             res
                 .status(400)
                 .json({
@@ -1421,20 +1790,24 @@ app.post(
 
 
 /* =========================================================
-   UPDATE ENTRY
+   UPDATE ENTRY API
    ========================================================= */
 
 app.patch(
     '/api/admin/entries/:id',
     requireOwner,
     (req, res) => {
+
         try {
+
             const patch = {};
+
 
             if (
                 req.body.title !==
                 undefined
             ) {
+
                 patch.title =
                     cleanString(
                         req.body.title,
@@ -1442,10 +1815,12 @@ app.patch(
                     );
             }
 
+
             if (
                 req.body.description !==
                 undefined
             ) {
+
                 patch.description =
                     cleanString(
                         req.body.description,
@@ -1453,10 +1828,12 @@ app.patch(
                     );
             }
 
+
             if (
                 req.body.status !==
                 undefined
             ) {
+
                 patch.status =
                     cleanString(
                         req.body.status,
@@ -1464,10 +1841,12 @@ app.patch(
                     ).toLowerCase();
             }
 
+
             if (
                 req.body.sectionSlug !==
                 undefined
             ) {
+
                 patch.sectionSlug =
                     cleanString(
                         req.body.sectionSlug,
@@ -1475,16 +1854,23 @@ app.patch(
                     );
             }
 
+
             const updated =
                 updateEntry(
-                    String(req.params.id),
+                    String(
+                        req.params.id
+                    ),
                     patch,
-                    req.session.user.username
+                    req.session.user
+                        .username
                 );
 
-            res.json(updated);
+            res.json(
+                updated
+            );
 
         } catch (error) {
+
             res
                 .status(400)
                 .json({
@@ -1497,23 +1883,31 @@ app.patch(
 
 
 /* =========================================================
-   DELETE ENTRY
+   DELETE ENTRY API
    ========================================================= */
 
 app.delete(
     '/api/admin/entries/:id',
     requireOwner,
     (req, res) => {
+
         try {
+
             const result =
                 deleteEntry(
-                    String(req.params.id),
-                    req.session.user.username
+                    String(
+                        req.params.id
+                    ),
+                    req.session.user
+                        .username
                 );
 
-            res.json(result);
+            res.json(
+                result
+            );
 
         } catch (error) {
+
             res
                 .status(400)
                 .json({
@@ -1526,25 +1920,31 @@ app.delete(
 
 
 /* =========================================================
-   CREATE SECTION
+   CREATE SECTION API
    ========================================================= */
 
 app.post(
     '/api/admin/sections',
     requireOwner,
     (req, res) => {
+
         try {
+
             const section =
                 createSection(
                     req.body.name,
-                    req.session.user.username
+                    req.session.user
+                        .username
                 );
 
             res
                 .status(201)
-                .json(section);
+                .json(
+                    section
+                );
 
         } catch (error) {
+
             res
                 .status(400)
                 .json({
@@ -1564,7 +1964,9 @@ app.post(
     '/api/admin/command',
     requireOwner,
     (req, res) => {
+
         try {
+
             const input =
                 cleanString(
                     req.body.command,
@@ -1573,6 +1975,7 @@ app.post(
 
             const username =
                 req.session.user.username;
+
 
             /*
              * ADD STATUS "Title" : "Description"
@@ -1584,6 +1987,7 @@ app.post(
                 );
 
             if (match) {
+
                 const status =
                     match[1].toLowerCase();
 
@@ -1619,9 +2023,12 @@ app.post(
                     });
 
                 return res.json({
-                    ok: true,
+                    ok:
+                        true,
+
                     message:
                         `Added ${entry.title}`,
+
                     entry
                 });
             }
@@ -1636,6 +2043,7 @@ app.post(
                 );
 
             if (match) {
+
                 const status =
                     match[1].toLowerCase();
 
@@ -1660,7 +2068,8 @@ app.post(
                 const entry =
                     addEntry({
                         title,
-                        description: title,
+                        description:
+                            title,
                         status,
                         sectionSlug:
                             section.slug,
@@ -1668,9 +2077,12 @@ app.post(
                     });
 
                 return res.json({
-                    ok: true,
+                    ok:
+                        true,
+
                     message:
                         `Added ${entry.title}`,
+
                     entry
                 });
             }
@@ -1685,6 +2097,7 @@ app.post(
                 );
 
             if (match) {
+
                 const section =
                     createSection(
                         match[1],
@@ -1692,9 +2105,12 @@ app.post(
                     );
 
                 return res.json({
-                    ok: true,
+                    ok:
+                        true,
+
                     message:
                         `Created section ${section.name}`,
+
                     section
                 });
             }
@@ -1709,8 +2125,11 @@ app.post(
                 );
 
             if (match) {
+
                 const entry =
-                    findEntry(match[1]);
+                    findEntry(
+                        match[1]
+                    );
 
                 const section =
                     findSectionByName(
@@ -1740,10 +2159,14 @@ app.post(
                     );
 
                 return res.json({
-                    ok: true,
+                    ok:
+                        true,
+
                     message:
                         `Moved ${entry.title} to ${section.name}`,
-                    entry: updated
+
+                    entry:
+                        updated
                 });
             }
 
@@ -1757,8 +2180,11 @@ app.post(
                 );
 
             if (match) {
+
                 const entry =
-                    findEntry(match[1]);
+                    findEntry(
+                        match[1]
+                    );
 
                 if (!entry) {
                     throw new Error(
@@ -1771,16 +2197,21 @@ app.post(
                         entry.id,
                         {
                             status:
-                                match[2].toLowerCase()
+                                match[2]
+                                    .toLowerCase()
                         },
                         username
                     );
 
                 return res.json({
-                    ok: true,
+                    ok:
+                        true,
+
                     message:
                         `Changed ${entry.title} to ${updated.status}`,
-                    entry: updated
+
+                    entry:
+                        updated
                 });
             }
 
@@ -1794,8 +2225,11 @@ app.post(
                 );
 
             if (match) {
+
                 const entry =
-                    findEntry(match[1]);
+                    findEntry(
+                        match[1]
+                    );
 
                 if (!entry) {
                     throw new Error(
@@ -1810,9 +2244,12 @@ app.post(
                     );
 
                 return res.json({
-                    ok: true,
+                    ok:
+                        true,
+
                     message:
                         `Deleted ${entry.title}`,
+
                     result
                 });
             }
@@ -1826,6 +2263,7 @@ app.post(
                     input
                 )
             ) {
+
                 const listMatch =
                     input.match(
                         /^LIST(?:\s+(.*))?$/i
@@ -1834,7 +2272,10 @@ app.post(
                 let rows =
                     getEntries();
 
-                if (listMatch[1]) {
+                if (
+                    listMatch[1]
+                ) {
+
                     const query =
                         listMatch[1]
                             .trim();
@@ -1845,17 +2286,20 @@ app.post(
                         );
 
                     if (section) {
+
                         rows =
                             rows.filter(
                                 e =>
                                     e.section_slug ===
                                     section.slug
                             );
+
                     } else if (
                         validStatus(
                             query.toLowerCase()
                         )
                     ) {
+
                         rows =
                             rows.filter(
                                 e =>
@@ -1866,14 +2310,18 @@ app.post(
                 }
 
                 return res.json({
-                    ok: true,
+                    ok:
+                        true,
+
                     message:
                         rows.map(
                             e =>
                                 `${e.title} [${e.status}] — ${e.section_name}`
                         ).join('\n') ||
                         'No entries found.',
-                    entries: rows
+
+                    entries:
+                        rows
                 });
             }
 
@@ -1886,8 +2334,11 @@ app.post(
                     input
                 )
             ) {
+
                 return res.json({
-                    ok: true,
+                    ok:
+                        true,
+
                     message:
                         'ADD IDEA "Title" : "Description" TO "Section" | SECTION "Name" | MOVE "Title" TO "Section" | STATUS "Title" LOCKED | DELETE "Title" | LIST [Section/Status] | HELP'
                 });
@@ -1899,6 +2350,7 @@ app.post(
             );
 
         } catch (error) {
+
             res
                 .status(400)
                 .json({
@@ -1917,6 +2369,7 @@ app.post(
 app.get(
     '/admin',
     (req, res) => {
+
         res.sendFile(
             path.join(
                 adminDir,
@@ -1928,7 +2381,9 @@ app.get(
 
 app.use(
     '/admin',
-    express.static(adminDir)
+    express.static(
+        adminDir
+    )
 );
 
 
@@ -1937,17 +2392,22 @@ app.use(
    ========================================================= */
 
 /*
- * The Master Canon itself becomes the public website.
+ * public/index.html is the Master Canon
+ * and the public website.
  */
 
 app.get(
     '/',
     (req, res) => {
+
         try {
+
             res.sendFile(
                 canonFile
             );
+
         } catch (error) {
+
             res
                 .status(500)
                 .send(
@@ -1957,9 +2417,11 @@ app.get(
     }
 );
 
+
 app.get(
     '/canon',
     (req, res) => {
+
         res.sendFile(
             canonFile
         );
@@ -1968,10 +2430,12 @@ app.get(
 
 
 /*
- * Existing CSS/JS/images remain available.
+ * Existing CSS, JS and images remain available.
  */
 app.use(
-    express.static(publicDir)
+    express.static(
+        publicDir
+    )
 );
 
 
@@ -1979,7 +2443,17 @@ app.use(
    START
    ========================================================= */
 
-app.listen(PORT, '127.0.0.1', () => {
-    console.log(`GAZELESS running at http://127.0.0.1:${PORT}`);
-    console.log(`Master Canon: ${canonFile}`);
-});
+app.listen(
+    PORT,
+    '127.0.0.1',
+    () => {
+
+        console.log(
+            `GAZELESS running at http://127.0.0.1:${PORT}`
+        );
+
+        console.log(
+            `Master Canon: ${canonFile}`
+        );
+    }
+);
