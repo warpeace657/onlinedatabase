@@ -55,29 +55,29 @@ app.use(
 /* =========================================================
    PATHS
    ========================================================= */
-
+ 
 const rootDir = path.join(__dirname, '..');
-
+ 
 const publicDir = path.join(rootDir, 'public');
 const adminDir = path.join(rootDir, 'admin');
-
+ 
 const backupDir = path.join(rootDir, 'backups');
-
+ 
 const canonFile = path.join(
     publicDir,
-    'public', 'Index.html'
+    'index.html'
 );
-
+ 
 const revisionFile = path.join(
-    canonDir,
+    rootDir,
     'revisions.json'
 );
-
-
+ 
+ 
 /* =========================================================
    DIRECTORIES
    ========================================================= */
-
+ 
 fs.mkdirSync(backupDir, { recursive: true });
 
 
