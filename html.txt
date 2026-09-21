@@ -12,7 +12,7 @@
 
     <meta
         name="description"
-        content="GAZELESS: THE BLINDER — Master project document."
+        content="GAZELESS: THE BLINDER ÔÇö Master project document."
     >
 
     <title>GAZELESS: THE BLINDER</title>
@@ -162,7 +162,7 @@
 
 
         <!-- =================================================
-             01 — OVERVIEW
+             01 ÔÇö OVERVIEW
              ================================================= -->
 
         <div id="overview" class="section">
@@ -213,7 +213,7 @@
 
 
         <!-- =================================================
-             02 — CORE PILLARS
+             02 ÔÇö CORE PILLARS
              ================================================= -->
 
         <div id="pillars" class="section">
@@ -318,7 +318,7 @@
 
 
         <!-- =================================================
-             03 — WORLD
+             03 ÔÇö WORLD
              ================================================= -->
 
         <div id="world" class="section">
@@ -372,7 +372,7 @@
 
 
         <!-- =================================================
-             04 — COSMIC PERCEPTION
+             04 ÔÇö COSMIC PERCEPTION
              ================================================= -->
 
         <div id="perception" class="section">
@@ -424,7 +424,7 @@
 
 
         <!-- =================================================
-             05 — THREE GAZES
+             05 ÔÇö THREE GAZES
              ================================================= -->
 
         <div id="gazes" class="section">
@@ -459,7 +459,7 @@
                     >
 
                         <div class="gaze-symbol">
-                            🔴
+                            ­ƒö┤
                         </div>
 
                         <div class="card-title">
@@ -498,7 +498,7 @@
                     >
 
                         <div class="gaze-symbol">
-                            🙈
+                            ­ƒÖê
                         </div>
 
                         <div class="card-title">
@@ -536,7 +536,7 @@
                     >
 
                         <div class="gaze-symbol">
-                            🌑
+                            ­ƒîæ
                         </div>
 
                         <div class="card-title">
@@ -575,7 +575,7 @@
 
 
         <!-- =================================================
-             06 — PROTAGONIST
+             06 ÔÇö PROTAGONIST
              ================================================= -->
 
         <div id="protagonist" class="section">
@@ -650,7 +650,7 @@
 
 
         <!-- =================================================
-             07 — PROLOGUE
+             07 ÔÇö PROLOGUE
              ================================================= -->
 
         <div id="prologue" class="section">
@@ -705,7 +705,7 @@
 
 
         <!-- =================================================
-             08 — HUB
+             08 ÔÇö HUB
              ================================================= -->
 
         <div id="hub" class="section">
@@ -758,7 +758,7 @@
 
 
         <!-- =================================================
-             09 — MESSENGERS
+             09 ÔÇö MESSENGERS
              ================================================= -->
 
         <div id="messengers" class="section">
@@ -845,7 +845,7 @@
 
 
         <!-- =================================================
-             10 — COMBAT
+             10 ÔÇö COMBAT
              ================================================= -->
 
         <div id="combat" class="section">
@@ -938,7 +938,7 @@
 
 
         <!-- =================================================
-             11 — GREAT APERTURE
+             11 ÔÇö GREAT APERTURE
              ================================================= -->
 
         <div id="aperture" class="section">
@@ -997,7 +997,7 @@
 
 
         <!-- =================================================
-             12 — NEW AGE
+             12 ÔÇö NEW AGE
              ================================================= -->
 
         <div id="new-age" class="section">
@@ -1062,7 +1062,7 @@
 
 
         <!-- =================================================
-             13 — COSMOLOGY
+             13 ÔÇö COSMOLOGY
              ================================================= -->
 
         <div id="cosmology" class="section">
@@ -1105,7 +1105,7 @@
 
 
         <!-- =================================================
-             14 — ART DIRECTION
+             14 ÔÇö ART DIRECTION
              ================================================= -->
 
         <div id="art" class="section">
@@ -1173,7 +1173,7 @@
 
 
         <!-- =================================================
-             15 — EXPERIENCE
+             15 ÔÇö EXPERIENCE
              ================================================= -->
 
         <div id="experience" class="section">
@@ -1216,7 +1216,7 @@
 
 
         <!-- =================================================
-             16 — IDENTITY
+             16 ÔÇö IDENTITY
              ================================================= -->
 
         <div id="identity" class="section">
@@ -1305,7 +1305,7 @@
 
 
         <!-- =================================================
-             17 — CANON
+             17 ÔÇö CANON
              ================================================= -->
 
         <div id="canon" class="section">
@@ -1342,28 +1342,28 @@
                         type="button"
                         data-filter="locked"
                     >
-                        🔒 LOCKED
+                        ­ƒöÆ LOCKED
                     </button>
 
                     <button
                         type="button"
                         data-filter="provisional"
                     >
-                        🟡 PROVISIONAL
+                        ­ƒƒí PROVISIONAL
                     </button>
 
                     <button
                         type="button"
                         data-filter="idea"
                     >
-                        💡 IDEA
+                        ­ƒÆí IDEA
                     </button>
 
                     <button
                         type="button"
                         data-filter="rejected"
                     >
-                        ❌ REJECTED
+                        ÔØî REJECTED
                     </button>
 
                 </div>
@@ -1381,7 +1381,7 @@
                     >
 
                         <div class="card-title">
-                            🔒 LOCKED
+                            ­ƒöÆ LOCKED
                         </div>
 
                         <div class="card-text">
@@ -1397,7 +1397,7 @@
                     >
 
                         <div class="card-title">
-                            🟡 PROVISIONAL
+                            ­ƒƒí PROVISIONAL
                         </div>
 
                         <div class="card-text">
@@ -1414,7 +1414,7 @@
                     >
 
                         <div class="card-title">
-                            💡 IDEA
+                            ­ƒÆí IDEA
                         </div>
 
                         <div class="card-text">
@@ -1431,7 +1431,7 @@
                     >
 
                         <div class="card-title">
-                            ❌ REJECTED
+                            ÔØî REJECTED
                         </div>
 
                         <div class="card-text">
