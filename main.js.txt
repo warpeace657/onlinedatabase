@@ -1,0 +1,36 @@
+document.addEventListener("DOMContentLoaded", () => {
+
+    const filterButtons = document.querySelectorAll("#filters button");
+    const canonCards = document.querySelectorAll(".canon-card");
+
+    filterButtons.forEach(button => {
+
+        button.addEventListener("click", () => {
+
+            const selectedFilter = button.dataset.filter;
+
+            // Update active button
+            filterButtons.forEach(btn => {
+                btn.classList.remove("active");
+            });
+
+            button.classList.add("active");
+
+            // Filter cards
+            canonCards.forEach(card => {
+
+                const cardStatus = card.dataset.status;
+
+                if (selectedFilter === "all" || cardStatus === selectedFilter) {
+                    card.classList.remove("hidden");
+                } else {
+                    card.classList.add("hidden");
+                }
+
+            });
+
+        });
+
+    });
+
+});
