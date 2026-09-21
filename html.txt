@@ -1,0 +1,1579 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="GAZELESS: THE BLINDER — Master project document."
+    >
+
+    <title>GAZELESS: THE BLINDER</title>
+
+    <link
+        rel="stylesheet"
+        href="css/style.css"
+    >
+
+</head>
+
+
+<body>
+
+
+<div id="gazeless" class="page">
+
+
+    <!-- =====================================================
+         HEADER
+         ===================================================== -->
+
+    <div id="header" class="site-header">
+
+        <div id="hero" class="hero">
+
+            <div id="hero-content" class="hero-content">
+
+                <div id="eyebrow" class="eyebrow">
+                    GAZELESS
+                </div>
+
+                <div id="title" class="title">
+                    THE BLINDER
+                </div>
+
+                <div id="subtitle" class="subtitle">
+                    An Open-World Dark-Fantasy Action RPG
+                </div>
+
+                <div id="intro" class="intro">
+                    Reality changes according to how it is perceived.
+                    Three cosmic Gazes have shaped the world.
+                    One mortal exists outside their sight.
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         NAVIGATION
+         ===================================================== -->
+
+    <div id="navigation" class="site-navigation">
+
+        <div id="nav-inner" class="nav-inner">
+
+            <div id="nav-links" class="nav-links">
+
+                <a href="#overview">
+                    Overview
+                </a>
+
+                <a href="#pillars">
+                    Pillars
+                </a>
+
+                <a href="#world">
+                    World
+                </a>
+
+                <a href="#perception">
+                    Perception
+                </a>
+
+                <a href="#gazes">
+                    Gazes
+                </a>
+
+                <a href="#protagonist">
+                    Protagonist
+                </a>
+
+                <a href="#prologue">
+                    Prologue
+                </a>
+
+                <a href="#hub">
+                    Observatory
+                </a>
+
+                <a href="#messengers">
+                    Messengers
+                </a>
+
+                <a href="#combat">
+                    Combat
+                </a>
+
+                <a href="#aperture">
+                    Great Aperture
+                </a>
+
+                <a href="#new-age">
+                    New Age
+                </a>
+
+                <a href="#cosmology">
+                    Cosmology
+                </a>
+
+                <a href="#art">
+                    Art Direction
+                </a>
+
+                <a href="#experience">
+                    Experience
+                </a>
+
+                <a href="#identity">
+                    Identity
+                </a>
+
+                <a href="#canon">
+                    Canon
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         MAIN
+         ===================================================== -->
+
+    <div id="main" class="main-content">
+
+
+
+        <!-- =================================================
+             01 — OVERVIEW
+             ================================================= -->
+
+        <div id="overview" class="section">
+
+            <div class="section-header">
+
+                <div class="section-number">
+                    01
+                </div>
+
+                <div class="section-title">
+                    GAZELESS: THE BLINDER
+                </div>
+
+                <div class="section-subtitle">
+                    Core Identity
+                </div>
+
+            </div>
+
+
+            <div class="section-content">
+
+                <div class="text-block">
+
+                    <p>
+                        GAZELESS: THE BLINDER is an open-world
+                        dark-fantasy action RPG centered around
+                        player freedom, exploration, challenging
+                        third-person action combat, Cosmic
+                        Perception, and a world that exists
+                        independently of the protagonist's story.
+                    </p>
+
+                    <p>
+                        The story continues beyond its apparent
+                        ending, allowing the player to continue
+                        exploring the world after the Age of the
+                        Gazes has ended.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =================================================
+             02 — CORE PILLARS
+             ================================================= -->
+
+        <div id="pillars" class="section">
+
+            <div class="section-header">
+
+                <div class="section-number">
+                    02
+                </div>
+
+                <div class="section-title">
+                    CORE PILLARS
+                </div>
+
+            </div>
+
+
+            <div class="section-content">
+
+                <div class="card-grid">
+
+
+                    <div class="card pillar-card">
+
+                        <div class="card-title">
+                            Player Freedom
+                        </div>
+
+                        <div class="card-text">
+                            Meaningful freedom in exploration,
+                            combat, progression, discovery,
+                            and interaction with the world.
+                        </div>
+
+                    </div>
+
+
+                    <div class="card pillar-card">
+
+                        <div class="card-title">
+                            Open World
+                        </div>
+
+                        <div class="card-text">
+                            A genuine open world rather than
+                            a linear sequence of large stages.
+                        </div>
+
+                    </div>
+
+
+                    <div class="card pillar-card">
+
+                        <div class="card-title">
+                            Challenging Combat
+                        </div>
+
+                        <div class="card-text">
+                            Third-person action combat focused
+                            on timing, positioning, adaptation,
+                            and player choice.
+                        </div>
+
+                    </div>
+
+
+                    <div class="card pillar-card">
+
+                        <div class="card-title">
+                            Cosmic Perception
+                        </div>
+
+                        <div class="card-text">
+                            Reality can change according to
+                            how it is perceived.
+                        </div>
+
+                    </div>
+
+
+                    <div class="card pillar-card">
+
+                        <div class="card-title">
+                            Living World
+                        </div>
+
+                        <div class="card-text">
+                            The world exists beyond the main
+                            story and continues after its
+                            apparent ending.
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =================================================
+             03 — WORLD
+             ================================================= -->
+
+        <div id="world" class="section">
+
+            <div class="section-header">
+
+                <div class="section-number">
+                    03
+                </div>
+
+                <div class="section-title">
+                    THE WORLD
+                </div>
+
+                <div class="section-subtitle">
+                    A World That Exists Beyond the Player
+                </div>
+
+            </div>
+
+
+            <div class="section-content">
+
+                <div class="text-block">
+
+                    <p>
+                        The world of GAZELESS should feel like
+                        a real world that happens to contain
+                        the protagonist's story.
+                    </p>
+
+                    <p>
+                        Civilizations, ruins, cultures,
+                        religions, creatures, landscapes,
+                        and mysteries exist independently
+                        of the player.
+                    </p>
+
+                    <p>
+                        The player is not the center of the
+                        universe. They are an anomaly moving
+                        through it.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =================================================
+             04 — COSMIC PERCEPTION
+             ================================================= -->
+
+        <div id="perception" class="section">
+
+            <div class="section-header">
+
+                <div class="section-number">
+                    04
+                </div>
+
+                <div class="section-title">
+                    COSMIC PERCEPTION
+                </div>
+
+                <div class="section-subtitle">
+                    Reality Changes According to Observation
+                </div>
+
+            </div>
+
+
+            <div class="section-content">
+
+                <div class="text-block">
+
+                    <p>
+                        One of the central concepts of GAZELESS
+                        is Cosmic Perception.
+                    </p>
+
+                    <p>
+                        Reality is not necessarily fixed.
+                        The way reality is observed can influence
+                        what the world appears to be and how it
+                        behaves.
+                    </p>
+
+                    <p>
+                        The three Gazes represent fundamentally
+                        different ways of perceiving existence.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =================================================
+             05 — THREE GAZES
+             ================================================= -->
+
+        <div id="gazes" class="section">
+
+            <div class="section-header">
+
+                <div class="section-number">
+                    05
+                </div>
+
+                <div class="section-title">
+                    THE THREE GAZES
+                </div>
+
+                <div class="section-subtitle">
+                    Three Ways Reality Can Be Seen
+                </div>
+
+            </div>
+
+
+            <div class="section-content">
+
+                <div class="card-grid gaze-grid">
+
+
+                    <!-- CRIMSON -->
+
+                    <div
+                        id="crimson-gaze"
+                        class="card gaze-card"
+                    >
+
+                        <div class="gaze-symbol">
+                            🔴
+                        </div>
+
+                        <div class="card-title">
+                            Crimson Gaze
+                        </div>
+
+                        <div class="card-subtitle">
+                            Age of the Flayed Horizon
+                        </div>
+
+                        <div class="card-text">
+
+                            <p>
+                                The Crimson Gaze represents
+                                its own distinct perception
+                                of reality.
+                            </p>
+
+                            <p>
+                                Its influence changes the
+                                appearance and rules of
+                                the world.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- AVERTING -->
+
+                    <div
+                        id="averting-gaze"
+                        class="card gaze-card"
+                    >
+
+                        <div class="gaze-symbol">
+                            🙈
+                        </div>
+
+                        <div class="card-title">
+                            Averting Gaze
+                        </div>
+
+                        <div class="card-subtitle">
+                            Age of the Blind Zenith
+                        </div>
+
+                        <div class="card-text">
+
+                            <p>
+                                The Averting Gaze represents
+                                another fundamental perception
+                                of reality.
+                            </p>
+
+                            <p>
+                                Its influence changes both
+                                the world and gameplay rules.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- HOLLOW -->
+
+                    <div
+                        id="hollow-gaze"
+                        class="card gaze-card"
+                    >
+
+                        <div class="gaze-symbol">
+                            🌑
+                        </div>
+
+                        <div class="card-title">
+                            Hollow Gaze
+                        </div>
+
+                        <div class="card-subtitle">
+                            Age of the Ashen Canvas
+                        </div>
+
+                        <div class="card-text">
+
+                            <p>
+                                The Hollow Gaze represents
+                                a reality shaped by absence
+                                and emptiness.
+                            </p>
+
+                            <p>
+                                Its influence changes both
+                                the appearance and rules
+                                of the world.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =================================================
+             06 — PROTAGONIST
+             ================================================= -->
+
+        <div id="protagonist" class="section">
+
+            <div class="section-header">
+
+                <div class="section-number">
+                    06
+                </div>
+
+                <div class="section-title">
+                    THE UNALIGNED ONE
+                </div>
+
+                <div class="section-subtitle">
+                    The Cosmic Blind Spot
+                </div>
+
+            </div>
+
+
+            <div class="section-content">
+
+                <div class="text-block">
+
+                    <p>
+                        The protagonist is known as
+                        <strong>The Unaligned One</strong>.
+                    </p>
+
+                    <p>
+                        Centuries ago, during a cosmic war
+                        when the divine Gazes descended upon
+                        the world, they were humanity's ultimate
+                        mortal protector.
+                    </p>
+
+                    <p>
+                        They eventually lost, died, and were
+                        forgotten.
+                    </p>
+
+                    <p>
+                        Centuries later, they resurrected.
+                    </p>
+
+                    <p>
+                        They were not chosen by prophecy
+                        or god.
+                    </p>
+
+                    <p>
+                        During their lifetime they rejected
+                        every god, leaving their soul outside
+                        the cosmic classification system.
+                    </p>
+
+                    <p>
+                        The Gazes cannot properly classify them.
+                    </p>
+
+                    <p class="emphasis">
+                        They are a cosmic blind spot.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =================================================
+             07 — PROLOGUE
+             ================================================= -->
+
+        <div id="prologue" class="section">
+
+            <div class="section-header">
+
+                <div class="section-number">
+                    07
+                </div>
+
+                <div class="section-title">
+                    THE CRYPT OF THE UNAWAKENED
+                </div>
+
+                <div class="section-subtitle">
+                    The Beginning
+                </div>
+
+            </div>
+
+
+            <div class="section-content">
+
+                <div class="text-block">
+
+                    <p>
+                        The player begins in
+                        <strong>
+                            The Crypt of the Unawakened
+                        </strong>.
+                    </p>
+
+                    <p>
+                        It functions as an unguided tutorial.
+                    </p>
+
+                    <p>
+                        Player behavior determines which
+                        Gaze becomes active.
+                    </p>
+
+                    <p>
+                        There are no explicit alignment choices.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =================================================
+             08 — HUB
+             ================================================= -->
+
+        <div id="hub" class="section">
+
+            <div class="section-header">
+
+                <div class="section-number">
+                    08
+                </div>
+
+                <div class="section-title">
+                    THE BLIND MAN'S OBSERVATORY
+                </div>
+
+                <div class="section-subtitle">
+                    The Impossible Sanctuary
+                </div>
+
+            </div>
+
+
+            <div class="section-content">
+
+                <div class="text-block">
+
+                    <p>
+                        The central hub is
+                        <strong>
+                            The Blind Man's Observatory
+                        </strong>.
+                    </p>
+
+                    <p>
+                        It is an impossible sanctuary
+                        constructed within the hollow interior
+                        of an ancient cosmic eye.
+                    </p>
+
+                    <p>
+                        The Observatory gradually changes
+                        as the player progresses.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =================================================
+             09 — MESSENGERS
+             ================================================= -->
+
+        <div id="messengers" class="section">
+
+            <div class="section-header">
+
+                <div class="section-number">
+                    09
+                </div>
+
+                <div class="section-title">
+                    THE THREE MESSENGERS
+                </div>
+
+                <div class="section-subtitle">
+                    Provisional Characters
+                </div>
+
+            </div>
+
+
+            <div class="section-content">
+
+                <div class="card-grid messenger-grid">
+
+
+                    <div class="card messenger-card">
+
+                        <div class="card-title">
+                            Edras
+                        </div>
+
+                        <div class="card-subtitle">
+                            The Wound That Knows
+                        </div>
+
+                        <div class="status">
+                            PROVISIONAL
+                        </div>
+
+                    </div>
+
+
+                    <div class="card messenger-card">
+
+                        <div class="card-title">
+                            Yselle
+                        </div>
+
+                        <div class="card-subtitle">
+                            The Mercy of Forgetting
+                        </div>
+
+                        <div class="status">
+                            PROVISIONAL
+                        </div>
+
+                    </div>
+
+
+                    <div class="card messenger-card">
+
+                        <div class="card-title">
+                            Nyr
+                        </div>
+
+                        <div class="card-subtitle">
+                            The One Who Remains
+                        </div>
+
+                        <div class="status">
+                            PROVISIONAL
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =================================================
+             10 — COMBAT
+             ================================================= -->
+
+        <div id="combat" class="section">
+
+            <div class="section-header">
+
+                <div class="section-number">
+                    10
+                </div>
+
+                <div class="section-title">
+                    COMBAT & GAMEPLAY
+                </div>
+
+            </div>
+
+
+            <div class="section-content">
+
+                <div class="card-grid">
+
+
+                    <div class="card">
+
+                        <div class="card-title">
+                            Third-Person Combat
+                        </div>
+
+                        <div class="card-text">
+                            Challenging action combat built
+                            around timing, positioning,
+                            adaptation, and player choice.
+                        </div>
+
+                    </div>
+
+
+                    <div class="card">
+
+                        <div class="card-title">
+                            Player Builds
+                        </div>
+
+                        <div class="card-text">
+                            Character development should support
+                            different approaches to combat
+                            and exploration.
+                        </div>
+
+                    </div>
+
+
+                    <div class="card">
+
+                        <div class="card-title">
+                            Gaze Mechanics
+                        </div>
+
+                        <div class="card-text">
+                            The active Gaze can alter gameplay
+                            systems as well as the appearance
+                            of the world.
+                        </div>
+
+                    </div>
+
+
+                    <div class="card">
+
+                        <div class="card-title">
+                            Exploration
+                        </div>
+
+                        <div class="card-text">
+                            The open world encourages discovery,
+                            experimentation, environmental
+                            storytelling, and player-driven
+                            exploration.
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =================================================
+             11 — GREAT APERTURE
+             ================================================= -->
+
+        <div id="aperture" class="section">
+
+            <div class="section-header">
+
+                <div class="section-number">
+                    11
+                </div>
+
+                <div class="section-title">
+                    THE GREAT APERTURE
+                </div>
+
+                <div class="section-subtitle">
+                    The Apparent Ending
+                </div>
+
+            </div>
+
+
+            <div class="section-content">
+
+                <div class="text-block">
+
+                    <p>
+                        The Great Aperture is the apparent
+                        climax of the original game.
+                    </p>
+
+                    <p>
+                        It is not merely a tower.
+                    </p>
+
+                    <p>
+                        It is a gigantic cosmic mechanism
+                        through which reality is observed
+                        and stabilized.
+                    </p>
+
+                    <p>
+                        Reaching the Great Aperture ends
+                        the <strong>Age of the Gazes</strong>.
+                    </p>
+
+                    <p class="emphasis">
+                        But it does not end the game.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =================================================
+             12 — NEW AGE
+             ================================================= -->
+
+        <div id="new-age" class="section">
+
+            <div class="section-header">
+
+                <div class="section-number">
+                    12
+                </div>
+
+                <div class="section-title">
+                    THE NEW AGE
+                </div>
+
+                <div class="section-subtitle">
+                    The World After the Gazes
+                </div>
+
+            </div>
+
+
+            <div class="section-content">
+
+                <div class="text-block">
+
+                    <p>
+                        After the Great Aperture, the player
+                        returns to the same fully explorable
+                        open world.
+                    </p>
+
+                    <p>
+                        The Age of the Gazes has ended.
+                    </p>
+
+                    <p>
+                        The world remains.
+                    </p>
+
+                    <p>
+                        Humanity now exists without the cosmic
+                        Gazes controlling reality.
+                    </p>
+
+                    <p>
+                        The player may continue exploring the
+                        world with a chosen Messenger physically
+                        accompanying them.
+                    </p>
+
+                    <p class="emphasis">
+                        The apparent ending becomes a new
+                        state of the world.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =================================================
+             13 — COSMOLOGY
+             ================================================= -->
+
+        <div id="cosmology" class="section">
+
+            <div class="section-header">
+
+                <div class="section-number">
+                    13
+                </div>
+
+                <div class="section-title">
+                    COSMOLOGY
+                </div>
+
+            </div>
+
+
+            <div class="section-content">
+
+                <div class="text-block">
+
+                    <p>
+                        The cosmology of GAZELESS should not
+                        be reduced to the existence of an
+                        even larger god above the Gazes.
+                    </p>
+
+                    <p>
+                        The nature of observation, reality,
+                        and the Gazes should remain
+                        philosophically ambiguous.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =================================================
+             14 — ART DIRECTION
+             ================================================= -->
+
+        <div id="art" class="section">
+
+            <div class="section-header">
+
+                <div class="section-number">
+                    14
+                </div>
+
+                <div class="section-title">
+                    ART DIRECTION
+                </div>
+
+            </div>
+
+
+            <div class="section-content">
+
+                <div class="card-grid">
+
+
+                    <div class="card">
+
+                        <div class="card-title">
+                            Dark Fantasy
+                        </div>
+
+                    </div>
+
+
+                    <div class="card">
+
+                        <div class="card-title">
+                            Cosmic Horror
+                        </div>
+
+                    </div>
+
+
+                    <div class="card">
+
+                        <div class="card-title">
+                            Surrealism
+                        </div>
+
+                    </div>
+
+
+                    <div class="card">
+
+                        <div class="card-title">
+                            Environmental Mystery
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =================================================
+             15 — EXPERIENCE
+             ================================================= -->
+
+        <div id="experience" class="section">
+
+            <div class="section-header">
+
+                <div class="section-number">
+                    15
+                </div>
+
+                <div class="section-title">
+                    EMOTIONAL EXPERIENCE
+                </div>
+
+            </div>
+
+
+            <div class="section-content">
+
+                <div class="text-block">
+
+                    <p>
+                        GAZELESS should create a feeling of
+                        discovery, uncertainty, mystery,
+                        isolation, beauty, and cosmic unease.
+                    </p>
+
+                    <p>
+                        The player should constantly question
+                        what they are seeing and what reality
+                        actually is.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =================================================
+             16 — IDENTITY
+             ================================================= -->
+
+        <div id="identity" class="section">
+
+            <div class="section-header">
+
+                <div class="section-number">
+                    16
+                </div>
+
+                <div class="section-title">
+                    WHAT MAKES GAZELESS DIFFERENT
+                </div>
+
+            </div>
+
+
+            <div class="section-content">
+
+                <div class="card-grid">
+
+
+                    <div class="card">
+
+                        <div class="card-title">
+                            Perception as Gameplay
+                        </div>
+
+                        <div class="card-text">
+                            Reality itself can become part
+                            of the gameplay system.
+                        </div>
+
+                    </div>
+
+
+                    <div class="card">
+
+                        <div class="card-title">
+                            A Cosmic Blind Spot
+                        </div>
+
+                        <div class="card-text">
+                            The protagonist exists outside
+                            the classification of the Gazes.
+                        </div>
+
+                    </div>
+
+
+                    <div class="card">
+
+                        <div class="card-title">
+                            The Ending Isn't the End
+                        </div>
+
+                        <div class="card-text">
+                            The Great Aperture transitions
+                            the world into the New Age instead
+                            of simply ending the game.
+                        </div>
+
+                    </div>
+
+
+                    <div class="card">
+
+                        <div class="card-title">
+                            A World Beyond the Story
+                        </div>
+
+                        <div class="card-text">
+                            The world exists independently
+                            from the protagonist's narrative.
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =================================================
+             17 — CANON
+             ================================================= -->
+
+        <div id="canon" class="section">
+
+            <div class="section-header">
+
+                <div class="section-number">
+                    17
+                </div>
+
+                <div class="section-title">
+                    MASTER CANON
+                </div>
+
+            </div>
+
+
+            <div class="section-content">
+
+
+                <!-- FILTER CONTROLS -->
+
+                <div id="filters" class="filters">
+
+                    <button
+                        type="button"
+                        class="active"
+                        data-filter="all"
+                    >
+                        ALL
+                    </button>
+
+                    <button
+                        type="button"
+                        data-filter="locked"
+                    >
+                        🔒 LOCKED
+                    </button>
+
+                    <button
+                        type="button"
+                        data-filter="provisional"
+                    >
+                        🟡 PROVISIONAL
+                    </button>
+
+                    <button
+                        type="button"
+                        data-filter="idea"
+                    >
+                        💡 IDEA
+                    </button>
+
+                    <button
+                        type="button"
+                        data-filter="rejected"
+                    >
+                        ❌ REJECTED
+                    </button>
+
+                </div>
+
+
+
+                <!-- CANON CARDS -->
+
+                <div class="canon-status-grid">
+
+
+                    <div
+                        class="card canon-card locked"
+                        data-status="locked"
+                    >
+
+                        <div class="card-title">
+                            🔒 LOCKED
+                        </div>
+
+                        <div class="card-text">
+                            Explicitly confirmed project canon.
+                        </div>
+
+                    </div>
+
+
+                    <div
+                        class="card canon-card provisional"
+                        data-status="provisional"
+                    >
+
+                        <div class="card-title">
+                            🟡 PROVISIONAL
+                        </div>
+
+                        <div class="card-text">
+                            Currently favored concepts that
+                            have not been permanently confirmed.
+                        </div>
+
+                    </div>
+
+
+                    <div
+                        class="card canon-card idea"
+                        data-status="idea"
+                    >
+
+                        <div class="card-title">
+                            💡 IDEA
+                        </div>
+
+                        <div class="card-text">
+                            Experimental possibilities that
+                            are not currently canon.
+                        </div>
+
+                    </div>
+
+
+                    <div
+                        class="card canon-card rejected"
+                        data-status="rejected"
+                    >
+
+                        <div class="card-title">
+                            ❌ REJECTED
+                        </div>
+
+                        <div class="card-text">
+                            Concepts explicitly discarded
+                            from the project.
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =================================================
+             PROJECT PRINCIPLE
+             ================================================= -->
+
+        <div
+            id="principle"
+            class="section principle-section"
+        >
+
+            <div class="section-header">
+
+                <div class="section-title">
+                    PROJECT PRINCIPLE
+                </div>
+
+            </div>
+
+
+            <div class="section-content">
+
+                <div class="text-block emphasis">
+
+                    <p>
+                        GAZELESS should never become a linear
+                        experience disguised as an open world.
+                    </p>
+
+                    <p>
+                        The world must remain larger than
+                        the story.
+                    </p>
+
+                    <p>
+                        The player must remain free to
+                        explore it.
+                    </p>
+
+                    <p>
+                        Reality itself must remain part
+                        of the mystery.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- =====================================================
+         FOOTER
+         ===================================================== -->
+
+    <div id="footer" class="site-footer">
+
+        <div
+            id="footer-navigation"
+            class="footer-navigation"
+        >
+
+            <a href="#overview">
+                Top
+            </a>
+
+            <a href="#pillars">
+                Pillars
+            </a>
+
+            <a href="#world">
+                World
+            </a>
+
+            <a href="#gazes">
+                Gazes
+            </a>
+
+            <a href="#protagonist">
+                Protagonist
+            </a>
+
+            <a href="#combat">
+                Combat
+            </a>
+
+            <a href="#aperture">
+                Aperture
+            </a>
+
+            <a href="#new-age">
+                New Age
+            </a>
+
+            <a href="#canon">
+                Canon
+            </a>
+
+        </div>
+
+
+        <div class="footer-title">
+            GAZELESS: THE BLINDER
+        </div>
+
+        <div class="footer-subtitle">
+            Master Project Document
+        </div>
+
+    </div>
+
+
+</div>
+
+
+<!-- =========================================================
+     JAVASCRIPT
+     ========================================================= -->
+
+<script src="js/main.js"></script>
+
+
+</body>
+
+</html>
