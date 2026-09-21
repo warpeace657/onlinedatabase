@@ -1,0 +1,1655 @@
+/* =========================================================
+   GAZELESS: THE BLINDER
+   COSMIC INTERFACE / MASTER PAGE
+   ========================================================= */
+
+
+/* =========================================================
+   01 — ROOT
+   ========================================================= */
+
+:root {
+
+    /* ---------- Layout ---------- */
+
+    --page-width: 1500px;
+    --content-width: 1180px;
+
+    --space-xs: 0.5rem;
+    --space-sm: 1rem;
+    --space-md: 2rem;
+    --space-lg: 4rem;
+    --space-xl: 8rem;
+
+
+    /* ---------- Typography ---------- */
+
+    --font-body:
+        "Inter",
+        "Segoe UI",
+        Arial,
+        sans-serif;
+
+    --font-display:
+        "Cinzel",
+        "Trajan Pro",
+        Georgia,
+        serif;
+
+
+    /* ---------- Core Colors ---------- */
+
+    --void: #050506;
+    --abyss: #09090c;
+    --obsidian: #101014;
+    --charcoal: #17171c;
+
+    --bone: #d6d0c3;
+    --bone-bright: #eee9dd;
+    --bone-dim: #85817a;
+
+    --ash: #55545a;
+
+    --line: rgba(214, 208, 195, 0.14);
+    --line-bright: rgba(214, 208, 195, 0.28);
+
+
+    /* ---------- Gaze Colors ---------- */
+
+    --crimson: #7d151b;
+    --crimson-bright: #b52a32;
+
+    --averting: #b9b8ad;
+    --averting-bright: #e8e5d8;
+
+    --hollow: #343746;
+    --hollow-bright: #666b7d;
+
+
+    /* ---------- Effects ---------- */
+
+    --shadow:
+        0 20px 60px rgba(0, 0, 0, 0.55);
+
+    --glow-crimson:
+        0 0 35px rgba(125, 21, 27, 0.18);
+
+    --glow-hollow:
+        0 0 35px rgba(80, 86, 110, 0.12);
+
+
+    /* ---------- Motion ---------- */
+
+    --transition-fast:
+        0.2s ease;
+
+    --transition-normal:
+        0.4s ease;
+
+    --transition-slow:
+        0.8s ease;
+}
+
+
+/* =========================================================
+   02 — RESET
+   ========================================================= */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    background: var(--void);
+    color: var(--bone);
+
+    scroll-behavior: smooth;
+}
+
+body {
+    min-height: 100vh;
+
+    background:
+        radial-gradient(
+            circle at 50% -10%,
+            rgba(255, 255, 255, 0.035),
+            transparent 40%
+        ),
+        linear-gradient(
+            180deg,
+            #050506 0%,
+            #08080b 45%,
+            #040405 100%
+        );
+
+    color: var(--bone);
+
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.75;
+
+    overflow-x: hidden;
+}
+
+body::before {
+    content: "";
+
+    position: fixed;
+    inset: 0;
+
+    pointer-events: none;
+    z-index: 9999;
+
+    opacity: 0.035;
+
+    background-image:
+        url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.7'/%3E%3C/svg%3E");
+
+    mix-blend-mode: overlay;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+button {
+    font: inherit;
+}
+
+img {
+    display: block;
+    max-width: 100%;
+}
+
+
+/* =========================================================
+   03 — PAGE
+   ========================================================= */
+
+#gazeless {
+    position: relative;
+
+    width: 100%;
+    min-height: 100vh;
+
+    isolation: isolate;
+}
+
+.page {
+    position: relative;
+}
+
+
+/* =========================================================
+   04 — AMBIENT COSMIC FIELD
+   ========================================================= */
+
+#gazeless::before {
+    content: "";
+
+    position: fixed;
+    inset: 0;
+
+    pointer-events: none;
+    z-index: -2;
+
+    background:
+        radial-gradient(
+            circle at 15% 20%,
+            rgba(125, 21, 27, 0.07),
+            transparent 25%
+        ),
+        radial-gradient(
+            circle at 85% 70%,
+            rgba(60, 65, 90, 0.06),
+            transparent 30%
+        );
+}
+
+#gazeless::after {
+    content: "";
+
+    position: fixed;
+
+    width: 70vw;
+    height: 70vw;
+
+    left: 50%;
+    top: 35%;
+
+    transform: translate(-50%, -50%);
+
+    border:
+        1px solid
+        rgba(214, 208, 195, 0.025);
+
+    border-radius: 50%;
+
+    pointer-events: none;
+    z-index: -1;
+
+    box-shadow:
+        0 0 100px rgba(255, 255, 255, 0.015),
+        inset 0 0 100px rgba(0, 0, 0, 0.5);
+}
+
+
+/* =========================================================
+   05 — HEADER
+   ========================================================= */
+
+#header {
+    position: relative;
+}
+
+.site-header {
+    min-height: 100vh;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    overflow: hidden;
+
+    border-bottom:
+        1px solid
+        var(--line);
+}
+
+
+/* ---------- Cosmic Eye ---------- */
+
+#header::before {
+    content: "";
+
+    position: absolute;
+
+    width: min(70vw, 850px);
+    height: min(70vw, 850px);
+
+    left: 50%;
+    top: 50%;
+
+    transform:
+        translate(-50%, -50%)
+        rotate(45deg);
+
+    border:
+        1px solid
+        rgba(214, 208, 195, 0.07);
+
+    opacity: 0.6;
+
+    pointer-events: none;
+}
+
+#header::after {
+    content: "";
+
+    position: absolute;
+
+    width: min(42vw, 520px);
+    height: min(42vw, 520px);
+
+    left: 50%;
+    top: 50%;
+
+    transform: translate(-50%, -50%);
+
+    border:
+        1px solid
+        rgba(125, 21, 27, 0.12);
+
+    border-radius: 50%;
+
+    box-shadow:
+        0 0 80px rgba(125, 21, 27, 0.05);
+
+    pointer-events: none;
+}
+
+
+/* =========================================================
+   06 — HERO
+   ========================================================= */
+
+#hero {
+    position: relative;
+    z-index: 2;
+
+    width: 100%;
+    min-height: 100vh;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding:
+        var(--space-xl)
+        var(--space-md);
+
+    text-align: center;
+}
+
+.hero-content {
+    width: 100%;
+    max-width: 900px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    gap: var(--space-md);
+}
+
+
+/* ---------- Eyebrow ---------- */
+
+#eyebrow {
+    position: relative;
+
+    color: var(--bone-dim);
+
+    font-size: 0.7rem;
+    font-weight: 600;
+
+    letter-spacing: 0.45em;
+    text-transform: uppercase;
+}
+
+#eyebrow::before,
+#eyebrow::after {
+    content: "";
+
+    display: inline-block;
+
+    width: 45px;
+    height: 1px;
+
+    margin:
+        0 15px
+        4px;
+
+    background: var(--line-bright);
+}
+
+
+/* ---------- Title ---------- */
+
+#title {
+    color: var(--bone-bright);
+
+    font-family: var(--font-display);
+
+    font-size:
+        clamp(3.5rem, 10vw, 9rem);
+
+    font-weight: 400;
+
+    letter-spacing: 0.08em;
+
+    line-height: 0.9;
+
+    text-shadow:
+        0 0 40px rgba(255, 255, 255, 0.04);
+}
+
+
+/* ---------- Subtitle ---------- */
+
+#subtitle {
+    color: var(--bone-dim);
+
+    font-size:
+        clamp(0.8rem, 1.5vw, 1rem);
+
+    letter-spacing: 0.25em;
+
+    text-transform: uppercase;
+}
+
+
+/* ---------- Intro ---------- */
+
+#intro {
+    max-width: 620px;
+
+    margin-top: var(--space-md);
+
+    color: #a5a097;
+
+    font-family: var(--font-display);
+
+    font-size: 1rem;
+
+    line-height: 1.9;
+}
+
+
+/* =========================================================
+   07 — NAVIGATION
+   ========================================================= */
+
+#navigation {
+    position: sticky;
+    top: 0;
+
+    z-index: 1000;
+
+    background:
+        rgba(5, 5, 6, 0.88);
+
+    border-bottom:
+        1px solid
+        var(--line);
+
+    backdrop-filter:
+        blur(18px);
+
+    -webkit-backdrop-filter:
+        blur(18px);
+}
+
+#nav-inner {
+    width: 100%;
+    max-width: var(--page-width);
+
+    margin: auto;
+
+    padding:
+        0.6rem
+        var(--space-md);
+}
+
+#nav-links {
+    display: flex;
+
+    align-items: center;
+
+    gap: 0.25rem;
+
+    overflow-x: auto;
+
+    scrollbar-width: none;
+}
+
+#nav-links::-webkit-scrollbar {
+    display: none;
+}
+
+.nav-links a {
+    position: relative;
+
+    flex-shrink: 0;
+
+    padding:
+        0.55rem
+        0.8rem;
+
+    color: var(--bone-dim);
+
+    font-size: 0.68rem;
+    font-weight: 500;
+
+    letter-spacing: 0.08em;
+
+    text-transform: uppercase;
+
+    transition:
+        color var(--transition-fast);
+}
+
+.nav-links a::after {
+    content: "";
+
+    position: absolute;
+
+    left: 50%;
+    bottom: 0;
+
+    width: 0;
+    height: 1px;
+
+    transform: translateX(-50%);
+
+    background: var(--bone);
+
+    transition:
+        width var(--transition-normal);
+}
+
+.nav-links a:hover {
+    color: var(--bone-bright);
+}
+
+.nav-links a:hover::after {
+    width: 70%;
+}
+
+
+/* =========================================================
+   08 — MAIN
+   ========================================================= */
+
+#main {
+    width: 100%;
+}
+
+.main-content {
+    width: 100%;
+    max-width: var(--content-width);
+
+    margin: 0 auto;
+}
+
+
+/* =========================================================
+   09 — SECTIONS
+   ========================================================= */
+
+.section {
+    position: relative;
+
+    padding:
+        var(--space-xl)
+        var(--space-md);
+
+    scroll-margin-top: 80px;
+}
+
+.section::before {
+    content: "";
+
+    position: absolute;
+
+    left: var(--space-md);
+    right: var(--space-md);
+    top: 0;
+
+    height: 1px;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            var(--line-bright),
+            transparent
+        );
+}
+
+
+/* =========================================================
+   10 — SECTION HEADERS
+   ========================================================= */
+
+.section-header {
+    position: relative;
+
+    margin-bottom:
+        var(--space-lg);
+}
+
+.section-number {
+    margin-bottom:
+        var(--space-sm);
+
+    color: var(--ash);
+
+    font-size: 0.65rem;
+
+    letter-spacing: 0.4em;
+
+    text-transform: uppercase;
+}
+
+.section-title {
+    color: var(--bone-bright);
+
+    font-family: var(--font-display);
+
+    font-size:
+        clamp(2rem, 5vw, 4rem);
+
+    font-weight: 400;
+
+    letter-spacing: 0.05em;
+
+    line-height: 1.1;
+}
+
+.section-subtitle {
+    margin-top:
+        var(--space-sm);
+
+    color: var(--bone-dim);
+
+    font-size: 0.7rem;
+
+    letter-spacing: 0.2em;
+
+    text-transform: uppercase;
+}
+
+
+/* =========================================================
+   11 — TEXT
+   ========================================================= */
+
+.text-block {
+    max-width: 820px;
+
+    color: #aaa59b;
+
+    font-size: 0.98rem;
+}
+
+.text-block p {
+    margin-bottom:
+        var(--space-md);
+}
+
+.text-block p:last-child {
+    margin-bottom: 0;
+}
+
+.text-block strong {
+    color: var(--bone-bright);
+
+    font-weight: 500;
+}
+
+.text-block .emphasis {
+    margin-top: var(--space-lg);
+
+    color: var(--bone-bright);
+
+    font-family: var(--font-display);
+
+    font-size: 1.3rem;
+
+    letter-spacing: 0.04em;
+}
+
+
+/* =========================================================
+   12 — CARDS
+   ========================================================= */
+
+.card-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 1px;
+
+    background:
+        var(--line);
+}
+
+.card {
+    position: relative;
+
+    min-height: 180px;
+
+    padding:
+        var(--space-md);
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(23, 23, 28, 0.96),
+            rgba(9, 9, 12, 0.98)
+        );
+
+    border: none;
+
+    overflow: hidden;
+
+    transition:
+        background var(--transition-normal),
+        transform var(--transition-normal);
+}
+
+.card::before {
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+    top: 0;
+
+    width: 1px;
+    height: 0;
+
+    background: var(--bone);
+
+    transition:
+        height var(--transition-normal);
+}
+
+.card:hover {
+    background:
+        linear-gradient(
+            145deg,
+            rgba(30, 30, 35, 0.98),
+            rgba(10, 10, 13, 1)
+        );
+
+    transform:
+        translateY(-3px);
+}
+
+.card:hover::before {
+    height: 100%;
+}
+
+.card-title {
+    color: var(--bone-bright);
+
+    font-family: var(--font-display);
+
+    font-size: 1.35rem;
+
+    letter-spacing: 0.03em;
+}
+
+.card-subtitle {
+    margin-top: 0.4rem;
+
+    color: var(--bone-dim);
+
+    font-size: 0.65rem;
+
+    letter-spacing: 0.15em;
+
+    text-transform: uppercase;
+}
+
+.card-text {
+    margin-top: var(--space-sm);
+
+    color: #8e8a84;
+
+    font-size: 0.88rem;
+}
+
+
+/* =========================================================
+   13 — PILLARS
+   ========================================================= */
+
+#pillars .pillar-card {
+    min-height: 220px;
+}
+
+
+/* =========================================================
+   14 — COSMIC PERCEPTION
+   ========================================================= */
+
+#perception {
+    overflow: hidden;
+}
+
+#perception::after {
+    content: "";
+
+    position: absolute;
+
+    width: 500px;
+    height: 500px;
+
+    right: -300px;
+    top: 20%;
+
+    border:
+        1px solid
+        rgba(214, 208, 195, 0.04);
+
+    border-radius: 50%;
+}
+
+
+/* =========================================================
+   15 — GAZES
+   ========================================================= */
+
+#gazes {
+    position: relative;
+}
+
+.gaze-grid {
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+}
+
+.gaze-card {
+    min-height: 390px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: flex-start;
+}
+
+.gaze-symbol {
+    margin-bottom:
+        var(--space-lg);
+
+    font-size: 2rem;
+
+    opacity: 0.75;
+}
+
+
+/* =========================================================
+   16 — CRIMSON GAZE
+   ========================================================= */
+
+#crimson-gaze {
+    background:
+        radial-gradient(
+            circle at 100% 0%,
+            rgba(125, 21, 27, 0.2),
+            transparent 50%
+        ),
+        linear-gradient(
+            145deg,
+            #1a0d0f,
+            #0b0809
+        );
+}
+
+#crimson-gaze::before {
+    background:
+        var(--crimson-bright);
+}
+
+#crimson-gaze:hover {
+    box-shadow:
+        var(--glow-crimson);
+}
+
+
+/* =========================================================
+   17 — AVERTING GAZE
+   ========================================================= */
+
+#averting-gaze {
+    background:
+        radial-gradient(
+            circle at 50% 0%,
+            rgba(220, 218, 202, 0.08),
+            transparent 55%
+        ),
+        linear-gradient(
+            145deg,
+            #171715,
+            #0a0a09
+        );
+}
+
+#averting-gaze::before {
+    background:
+        var(--averting-bright);
+}
+
+
+/* =========================================================
+   18 — HOLLOW GAZE
+   ========================================================= */
+
+#hollow-gaze {
+    background:
+        radial-gradient(
+            circle at 100% 100%,
+            rgba(70, 76, 100, 0.18),
+            transparent 55%
+        ),
+        linear-gradient(
+            145deg,
+            #0d0f16,
+            #07080b
+        );
+}
+
+#hollow-gaze::before {
+    background:
+        var(--hollow-bright);
+}
+
+#hollow-gaze:hover {
+    box-shadow:
+        var(--glow-hollow);
+}
+
+
+/* =========================================================
+   19 — PROTAGONIST
+   ========================================================= */
+
+#protagonist {
+    background:
+        radial-gradient(
+            ellipse at 80% 30%,
+            rgba(214, 208, 195, 0.025),
+            transparent 40%
+        );
+}
+
+#protagonist .emphasis {
+    position: relative;
+
+    padding-left:
+        var(--space-md);
+
+    border-left:
+        1px solid
+        var(--line-bright);
+}
+
+
+/* =========================================================
+   20 — PROLOGUE
+   ========================================================= */
+
+#prologue {
+    background:
+        linear-gradient(
+            180deg,
+            transparent,
+            rgba(255, 255, 255, 0.012),
+            transparent
+        );
+}
+
+
+/* =========================================================
+   21 — OBSERVATORY
+   ========================================================= */
+
+#hub {
+    overflow: hidden;
+}
+
+#hub::after {
+    content: "";
+
+    position: absolute;
+
+    width: 600px;
+    height: 600px;
+
+    left: 50%;
+    top: 45%;
+
+    transform:
+        translate(-50%, -50%);
+
+    border:
+        1px solid
+        rgba(214, 208, 195, 0.035);
+
+    border-radius: 50%;
+
+    box-shadow:
+        0 0 0 50px rgba(214, 208, 195, 0.01),
+        0 0 0 100px rgba(214, 208, 195, 0.008);
+
+    pointer-events: none;
+}
+
+
+/* =========================================================
+   22 — MESSENGERS
+   ========================================================= */
+
+.messenger-grid {
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+}
+
+.messenger-card {
+    min-height: 260px;
+}
+
+.messenger-card .card-title {
+    font-size: 1.5rem;
+}
+
+.status {
+    display: inline-block;
+
+    margin-top:
+        var(--space-lg);
+
+    padding:
+        0.3rem
+        0.6rem;
+
+    border:
+        1px solid
+        var(--line);
+
+    color: var(--bone-dim);
+
+    font-size: 0.55rem;
+
+    letter-spacing: 0.2em;
+
+    text-transform: uppercase;
+}
+
+
+/* =========================================================
+   23 — COMBAT
+   ========================================================= */
+
+#combat {
+    background:
+        radial-gradient(
+            ellipse at 20% 50%,
+            rgba(125, 21, 27, 0.04),
+            transparent 40%
+        );
+}
+
+
+/* =========================================================
+   24 — GREAT APERTURE
+   ========================================================= */
+
+#aperture {
+    min-height: 80vh;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+    overflow: hidden;
+}
+
+#aperture::after {
+    content: "";
+
+    position: absolute;
+
+    width: 800px;
+    height: 800px;
+
+    left: 50%;
+    top: 50%;
+
+    transform:
+        translate(-50%, -50%)
+        rotate(45deg);
+
+    border:
+        1px solid
+        rgba(214, 208, 195, 0.035);
+
+    pointer-events: none;
+}
+
+#aperture .emphasis {
+    color: var(--bone-bright);
+
+    font-size: 1.5rem;
+}
+
+
+/* =========================================================
+   25 — NEW AGE
+   ========================================================= */
+
+#new-age {
+    background:
+        radial-gradient(
+            ellipse at 50% 0%,
+            rgba(214, 208, 195, 0.035),
+            transparent 50%
+        );
+}
+
+#new-age .section-title {
+    letter-spacing: 0.12em;
+}
+
+
+/* =========================================================
+   26 — COSMOLOGY
+   ========================================================= */
+
+#cosmology {
+    min-height: 60vh;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+}
+
+#cosmology .text-block {
+    font-family: var(--font-display);
+
+    font-size: 1.05rem;
+}
+
+
+/* =========================================================
+   27 — ART DIRECTION
+   ========================================================= */
+
+#art .card {
+    min-height: 160px;
+
+    display: flex;
+
+    align-items: flex-end;
+}
+
+
+/* =========================================================
+   28 — EXPERIENCE
+   ========================================================= */
+
+#experience {
+    min-height: 70vh;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+}
+
+#experience .text-block {
+    font-family: var(--font-display);
+
+    font-size: 1.1rem;
+
+    line-height: 2;
+}
+
+
+/* =========================================================
+   29 — IDENTITY
+   ========================================================= */
+
+#identity {
+    background:
+        linear-gradient(
+            180deg,
+            transparent,
+            rgba(125, 21, 27, 0.025),
+            transparent
+        );
+}
+
+
+/* =========================================================
+   30 — CANON
+   ========================================================= */
+
+#canon {
+    background:
+        rgba(0, 0, 0, 0.12);
+}
+
+.canon-status-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, minmax(0, 1fr));
+
+    gap: 1px;
+
+    background:
+        var(--line);
+}
+
+.canon-card {
+    min-height: 210px;
+}
+
+
+/* ---------- LOCKED ---------- */
+
+.canon-card.locked {
+    border-top:
+        2px solid
+        #d6d0c3;
+}
+
+
+/* ---------- PROVISIONAL ---------- */
+
+.canon-card.provisional {
+    border-top:
+        2px dashed
+        #8f8b82;
+}
+
+
+/* ---------- IDEA ---------- */
+
+.canon-card.idea {
+    border-top:
+        2px dotted
+        #68645e;
+}
+
+
+/* ---------- REJECTED ---------- */
+
+.canon-card.rejected {
+    opacity: 0.45;
+
+    border-top:
+        2px solid
+        #3c3a38;
+}
+
+
+/* =========================================================
+   31 — FILTER SYSTEM
+   ========================================================= */
+
+.filter-locked .provisional,
+.filter-locked .idea,
+.filter-locked .rejected {
+    display: none;
+}
+
+.filter-provisional .locked,
+.filter-provisional .idea,
+.filter-provisional .rejected {
+    display: none;
+}
+
+.filter-idea .locked,
+.filter-idea .provisional,
+.filter-idea .rejected {
+    display: none;
+}
+
+.filter-rejected .locked,
+.filter-rejected .provisional,
+.filter-rejected .idea {
+    display: none;
+}
+
+
+/* =========================================================
+   32 — FILTER BUTTONS
+   ========================================================= */
+
+#filters {
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 0.5rem;
+
+    margin-bottom:
+        var(--space-lg);
+}
+
+.filters button {
+    position: relative;
+
+    padding:
+        0.6rem
+        0.9rem;
+
+    background:
+        transparent;
+
+    border:
+        1px solid
+        var(--line);
+
+    color:
+        var(--bone-dim);
+
+    cursor: pointer;
+
+    font-size: 0.65rem;
+
+    letter-spacing: 0.12em;
+
+    text-transform: uppercase;
+
+    transition:
+        color var(--transition-fast),
+        border-color var(--transition-fast),
+        background var(--transition-fast);
+}
+
+.filters button:hover,
+.filters button.active {
+    color:
+        var(--bone-bright);
+
+    border-color:
+        var(--line-bright);
+
+    background:
+        rgba(214, 208, 195, 0.05);
+}
+
+
+/* =========================================================
+   33 — PRINCIPLE
+   ========================================================= */
+
+#principle {
+    min-height: 70vh;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+    text-align: center;
+}
+
+#principle .section-header {
+    margin-bottom:
+        var(--space-md);
+}
+
+#principle .section-title {
+    font-size:
+        clamp(2rem, 5vw, 4rem);
+}
+
+.principle-section .text-block {
+    max-width: 700px;
+
+    margin: 0 auto;
+
+    font-family: var(--font-display);
+
+    font-size: 1.05rem;
+
+    line-height: 2;
+}
+
+
+/* =========================================================
+   34 — FOOTER
+   ========================================================= */
+
+#footer {
+    position: relative;
+
+    padding:
+        var(--space-lg)
+        var(--space-md);
+
+    border-top:
+        1px solid
+        var(--line);
+
+    background:
+        #030304;
+}
+
+.site-footer {
+    text-align: center;
+}
+
+#footer-navigation {
+    display: flex;
+
+    justify-content: center;
+
+    flex-wrap: wrap;
+
+    gap: 0.3rem;
+
+    margin-bottom:
+        var(--space-lg);
+}
+
+.footer-navigation a {
+    padding:
+        0.4rem
+        0.7rem;
+
+    color: var(--bone-dim);
+
+    font-size: 0.65rem;
+
+    letter-spacing: 0.1em;
+
+    text-transform: uppercase;
+
+    transition:
+        color var(--transition-fast);
+}
+
+.footer-navigation a:hover {
+    color: var(--bone-bright);
+}
+
+.footer-title {
+    color: var(--bone);
+
+    font-family: var(--font-display);
+
+    font-size: 1.3rem;
+
+    letter-spacing: 0.1em;
+}
+
+.footer-subtitle {
+    margin-top:
+        var(--space-xs);
+
+    color: var(--ash);
+
+    font-size: 0.65rem;
+
+    letter-spacing: 0.15em;
+
+    text-transform: uppercase;
+}
+
+
+/* =========================================================
+   35 — SCROLLBAR
+   ========================================================= */
+
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background:
+        var(--void);
+}
+
+::-webkit-scrollbar-thumb {
+    background:
+        #25252a;
+
+    border:
+        2px solid
+        var(--void);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background:
+        #3a3a40;
+}
+
+
+/* =========================================================
+   36 — SELECTION
+   ========================================================= */
+
+::selection {
+    background:
+        rgba(125, 21, 27, 0.5);
+
+    color:
+        var(--bone-bright);
+}
+
+
+/* =========================================================
+   37 — FOCUS
+   ========================================================= */
+
+:focus-visible {
+    outline:
+        1px solid
+        var(--bone-bright);
+
+    outline-offset:
+        4px;
+}
+
+
+/* =========================================================
+   38 — TABLET
+   ========================================================= */
+
+@media (max-width: 950px) {
+
+    :root {
+        --space-xl: 6rem;
+    }
+
+    .gaze-grid,
+    .messenger-grid {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+
+    .canon-status-grid {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+
+}
+
+
+/* =========================================================
+   39 — MOBILE
+   ========================================================= */
+
+@media (max-width: 650px) {
+
+    :root {
+        --space-md: 1.25rem;
+        --space-lg: 3rem;
+        --space-xl: 5rem;
+    }
+
+
+    #hero {
+        padding:
+            var(--space-lg)
+            var(--space-md);
+    }
+
+
+    #title {
+        font-size:
+            clamp(3rem, 16vw, 5rem);
+
+        letter-spacing:
+            0.04em;
+    }
+
+
+    #subtitle {
+        font-size: 0.65rem;
+
+        letter-spacing:
+            0.16em;
+    }
+
+
+    #intro {
+        font-size:
+            0.9rem;
+    }
+
+
+    .section {
+        padding:
+            var(--space-xl)
+            var(--space-md);
+    }
+
+
+    .card-grid,
+    .gaze-grid,
+    .messenger-grid,
+    .canon-status-grid {
+        grid-template-columns:
+            1fr;
+    }
+
+
+    .section-title {
+        font-size:
+            2.4rem;
+    }
+
+
+    #header::before {
+        width: 90vw;
+        height: 90vw;
+    }
+
+
+    #header::after {
+        width: 65vw;
+        height: 65vw;
+    }
+
+
+    #hub::after,
+    #aperture::after {
+        width: 400px;
+        height: 400px;
+    }
+
+}
+
+
+/* =========================================================
+   40 — REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    html {
+        scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+        transition:
+            none !important;
+
+        animation:
+            none !important;
+    }
+
+}
