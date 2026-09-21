@@ -61,12 +61,11 @@ const rootDir = path.join(__dirname, '..');
 const publicDir = path.join(rootDir, 'public');
 const adminDir = path.join(rootDir, 'admin');
 
-const canonDir = path.join(rootDir, 'canon');
 const backupDir = path.join(rootDir, 'backups');
 
 const canonFile = path.join(
-    canonDir,
-    'master-canon.html'
+    publicDir,
+    'public', 'Index.html'
 );
 
 const revisionFile = path.join(
@@ -79,7 +78,6 @@ const revisionFile = path.join(
    DIRECTORIES
    ========================================================= */
 
-fs.mkdirSync(canonDir, { recursive: true });
 fs.mkdirSync(backupDir, { recursive: true });
 
 
@@ -1981,15 +1979,7 @@ app.use(
    START
    ========================================================= */
 
-app.listen(
-    PORT,
-    () => {
-        console.log(
-            `GAZELESS running at http://localhost:${PORT}`
-        );
-
-        console.log(
-            `Master Canon: ${canonFile}`
-        );
-    }
-);
+app.listen(PORT, '127.0.0.1', () => {
+    console.log(`GAZELESS running at http://127.0.0.1:${PORT}`);
+    console.log(`Master Canon: ${canonFile}`);
+});
