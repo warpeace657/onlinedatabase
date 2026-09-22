@@ -1205,60 +1205,110 @@ function updateEntry(
                         );
 
 
-                    /*
-                     * Locate destination section.
-                     */
-                    const range =
-                        findSectionRange(
-                            removed,
-                            newSection.slug
-                        );
-
-                    const sectionHtml =
-                        removed.slice(
-                            range.start,
-                            range.end
-                        );
-
-                    const gridRegex =
-                        /<div\s+class="card-grid[^"]*"[^>]*>/i;
-
-                    const gridMatch =
-                        sectionHtml.match(
-                            gridRegex
-                        );
-
-                    if (!gridMatch) {
-                        throw new Error(
-                            'Destination section has no card grid.'
-                        );
-                    }
-
-                    const insertAt =
-                        gridMatch.index +
-                        gridMatch[0].length;
-
-                    const updatedSection =
-                        sectionHtml.slice(
-                            0,
-                            insertAt
-                        ) +
-                        '\n' +
-                        replacement +
-                        sectionHtml.slice(
-                            insertAt
-                        );
-
-                    return (
-                        removed.slice(
-                            0,
-                            range.start
-                        ) +
-                        updatedSection +
-                        removed.slice(
-                            range.end
-                        )
-                    );
+/*
+* Locate destination section.
+*/
+const range =
+    findSectionRange(
+        removed,
+        newSection.slug
+    );
+ 
+const sectionHtml =
+    removed.slice(
+        range.start,
+        range.end
+    );
+ 
+/*
+* Prefer a card-grid when the destination
+* section has one.
+*/
+const gridRegex =
+    /<div\b[^>]*\bclass="[^"]*\bcard-grid\b[^"]*"[^>]*>/i;
+ 
+const gridMatch =
+    sectionHtml.match(
+        gridRegex
+    );
+ 
+let insertAt;
+ 
+if (gridMatch) {
+ 
+    /*
+     * Card-based section.
+     */
+    insertAt =
+        gridMatch.index +
+        gridMatch[0].length;
+ 
+} else {
+ 
+    /*
+     * Non-card section.
+     * Insert into section-content.
+     */
+    const contentRegex =
+        /<div\b[^>]*\bclass="[^"]*\bsection-content\b[^"]*"[^>]*>/i;
+ 
+    const contentMatch =
+        sectionHtml.match(
+            contentRegex
+        );
+ 
+    if (contentMatch) {
+ 
+        insertAt =
+            contentMatch.index +
+            contentMatch[0].length;
+ 
+    } else {
+ 
+        /*
+         * Final fallback:
+         * insert immediately after the
+         * opening <section> tag.
+         */
+        const sectionTag =
+            sectionHtml.match(
+                /<section\b[^>]*>/i
+            );
+ 
+        if (!sectionTag) {
+            throw new Error(
+                'Could not find a valid destination section.'
+            );
+        }
+ 
+        insertAt =
+            sectionTag.index +
+            sectionTag[0].length;
+    }
+}
+ 
+const updatedSection =
+    sectionHtml.slice(
+        0,
+        insertAt
+    ) +
+    '\n' +
+    replacement +
+    '\n' +
+    sectionHtml.slice(
+        insertAt
+    );
+ 
+return (
+    removed.slice(
+        0,
+        range.start
+    ) +
+    updatedSection +
+    removed.slice(
+        range.end
+    )
+);
                 }
 
 
